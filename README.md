@@ -1,58 +1,83 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# ðŸ“¦ Sistem Peminjaman Barang & Peralatan (PinjamBarang)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi web modern untuk manajemen dan pengajuan peminjaman barang/aset inventaris berbasis **Laravel 13**, **Tailwind CSS**, dan **SQLite**. Dilengkapi landing page interaktif, formulir peminjaman dengan data peminjam lengkap, tiket pelacakan mandiri, dan panel kontrol admin terintegrasi.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## ðŸš€ Fitur Utama
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Katalog Inventaris Real-Time**: Daftar barang siap pakai dengan filter kategori, pencarian cepat, dan status sisa kuota/stok.
+- **Formulir Peminjaman Lengkap**:
+  - *Nickname* (nama panggilan peminjam)
+  - Nama Lengkap (sesuai identitas)
+  - No. Telepon / WhatsApp (tersedia link chat langsung untuk petugas)
+  - Alamat Email aktif (otomatis masuk ke sistem notifikasi admin)
+  - Pilihan barang & jumlah unit (dengan validasi stok)
+  - Tanggal peminjaman & pengembalian barang (dengan tombol durasi cepat)
+  - Alasan / keperluan peminjaman
+- **Tiket Resi Digital**: Menghasilkan kode unik peminjaman (misal: `#PJ-10293`) dengan fitur salin 1-klik.
+- **Pelacakan Status Mandiri (`/cek-status`)**: Pengguna dapat memantau proses verifikasi admin secara langsung via kode tiket atau nomor kontak.
+- **Panel Admin Terintegrasi (`/admin/loans` & `/dashboard`)**:
+  - Tinjau seluruh permohonan yang masuk secara *real-time*.
+  - Aksi **Setujui** (stok barang berkurang otomatis).
+  - Aksi **Tolak** (disertai catatan admin).
+  - Aksi **Barang Kembali** (stok barang bertambah kembali secara otomatis).
+  - Fitur **Ubah Tanggal** untuk perpanjangan jadwal peminjaman.
+- **ðŸ“± 100% Responsif (HP & Laptop)**:
+  - *Di HP*: Bilah menu bawah (*Mobile Bottom Navigation*), tombol pilihan tanggal instan, dan kartu ringkas di dashboard.
+  - *Di Laptop*: Tampilan katalog lebar, metrik statistik lengkap, dan tabel data luas.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## ðŸ› ï¸ Teknologi yang Digunakan
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **Backend**: Laravel 13 & PHP 8.3
+- **Frontend**: Blade Templates, Tailwind CSS, Vite
+- **Autentikasi**: Laravel Breeze
+- **Basis Data**: SQLite (Praktis & siap pakai)
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+## ðŸ’» Panduan Instalasi Lokal
 
-## Agentic Development
+1. **Clone Repositori**:
+   ```bash
+   git clone https://github.com/raissawulan/peminjaman-barang.git
+   cd peminjaman-barang
+   ```
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+2. **Instal Dependensi**:
+   ```bash
+   composer install
+   npm install
+   ```
 
-```bash
-composer require laravel/boost --dev
+3. **Konfigurasi Environment**:
+   ```bash
+   copy .env.example .env
+   php artisan key:generate
+   ```
 
-php artisan boost:install
-```
+4. **Migrasi & Data Sampel**:
+   ```bash
+   php artisan migrate --seed
+   npm run build
+   ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+5. **Jalankan Aplikasi**:
+   ```bash
+   php artisan serve
+   ```
+   Buka di browser Anda di: `http://localhost:8000`
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## ðŸ”‘ Akun Demo Administrator
 
-## Code of Conduct
+- **Halaman Login**: `http://localhost:8000/login`
+- **Email**: `admin@admin.com`
+- **Password**: `password123`
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Dibuat dengan â¤ï¸ oleh [Raissa](https://github.com/raissawulan).
