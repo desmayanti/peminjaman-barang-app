@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
+        $this->call(ItemSeeder::class);
+
         // 2. Seed Realistic Catalog Items
         $items = [
             [

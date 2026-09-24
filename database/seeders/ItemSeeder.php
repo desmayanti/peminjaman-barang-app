@@ -7,33 +7,32 @@ use App\Models\Item;
 
 class ItemSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
+    public function run()
     {
-        $categories = ['Komputasi & IT', 'Broadcast & Media', 'Ruang & Riset', 'Audio Visual & Acara', 'Perkakas & Pendukung'];
-        $itemsData = [];
+        Item::truncate();
+
+        $categories = ['Elektronik & Laptop', 'Perlengkapan Multimedia', 'IoT & Robotika', 'Kabel & Adaptor', 'Ruangan'];
+        $items = [];
 
         for ($i = 1; $i <= 250; $i++) {
-            $cat = $categories[array_rand($categories)];
-            
-            // Randomize stock between 0 and 15 to test closed-loop logic
             $stock = rand(0, 15);
-            
-            $itemsData[] = [
-                'name' => 'Sarpras Unit ' . $cat . ' #' . $i,
-                'code' => 'SRP-' . str_pad($i, 3, '0', STR_PAD_LEFT),
-                'category' => $cat,
-                'description' => 'Aset inventaris untuk ' . $cat . ' nomor ' . $i,
+            $items[] = [
+                'name' => 'Barang Dummy ' . $i,
+                'code' => 'DUM-' . str_pad($i, 4, '0', STR_PAD_LEFT),
+                'category' => $categories[array_rand($categories)],
+                'description' => 'Kondisi: Baik. Deskripsi barang dummy ke-' . $i,
                 'total_stock' => $stock,
                 'available_stock' => $stock,
-                'condition' => 'Baik',
+                'icon' => '📦',
+                'status' => 'Tersedia',
                 'created_at' => now(),
                 'updated_at' => now(),
             ];
         }
 
-        Item::insert($itemsData);
+        // Chunk insert to avoid too many bindings error in SQLite
+        foreach (array_chunk($items, 50) as $chunk) {
+            Item::insert($chunk);
+        }
     }
 }
