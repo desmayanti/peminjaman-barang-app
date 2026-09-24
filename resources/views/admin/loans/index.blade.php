@@ -23,6 +23,33 @@
     <div class="py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
 
+            <!-- NOTIFIKASI RESTOCK OTOMATIS -->
+            @php $emptyItems = \App\Models\Item::where('available_stock', 0)->get(); @endphp
+            @if($emptyItems->count() > 0)
+                <div class="bg-rose-500/10 border-l-4 border-rose-500 p-4 rounded-r-lg shadow-sm">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0">
+                            <svg class="h-5 w-5 text-rose-500 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                            </svg>
+                        </div>
+                        <div class="ml-3">
+                            <h3 class="text-sm font-bold text-rose-700 dark:text-rose-400">
+                                Peringatan Stok Habis (Restock Needed)
+                            </h3>
+                            <div class="mt-1 text-sm text-rose-600 dark:text-rose-300">
+                                <p>Beberapa barang berikut saat ini kehabisan stok. Saat barang dikembalikan, notifikasi ini akan otomatis hilang untuk barang tersebut:</p>
+                                <ul class="list-disc pl-5 mt-2 space-y-1">
+                                    @foreach($emptyItems as $emptyItem)
+                                        <li><strong>{{ $emptyItem->code }}</strong> - {{ $emptyItem->name }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
             <!-- Flash Alerts -->
             @if(session('success'))
                 <div class="p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-200 text-sm flex items-center gap-3">
@@ -154,23 +181,26 @@
                                     </button>
 
                                     @if($loan->status == 'pending')
-                                        <form action="{{ route('admin.loans.status', $loan->id) }}" method="POST" class="flex-1">
+                                        <form action="{{ route('admin.loans.update', $loan->id) }}" method="POST" class="flex-1">
                                             @csrf
+                                            @method('PATCH')
                                             <input type="hidden" name="status" value="approved">
                                             <button type="submit" class="w-full py-2 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-center text-xs font-bold">
                                                 Setujui
                                             </button>
                                         </form>
-                                        <form action="{{ route('admin.loans.status', $loan->id) }}" method="POST" class="flex-1">
+                                        <form action="{{ route('admin.loans.update', $loan->id) }}" method="POST" class="flex-1">
                                             @csrf
+                                            @method('PATCH')
                                             <input type="hidden" name="status" value="rejected">
                                             <button type="submit" class="w-full py-2 px-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-center text-xs font-bold">
                                                 Tolak
                                             </button>
                                         </form>
                                     @elseif($loan->status == 'approved')
-                                        <form action="{{ route('admin.loans.status', $loan->id) }}" method="POST" class="flex-1">
+                                        <form action="{{ route('admin.loans.update', $loan->id) }}" method="POST" class="flex-1">
                                             @csrf
+                                            @method('PATCH')
                                             <input type="hidden" name="status" value="returned">
                                             <button type="submit" class="w-full py-2 px-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-center text-xs font-bold">
                                                 Tandai Kembali
@@ -287,8 +317,9 @@
     </button>
                                                 @if($loan->status == 'pending')
                                                     <!-- Approve Form -->
-                                                    <form action="{{ route('admin.loans.status', $loan->id) }}" method="POST" onsubmit="return confirm('Setujui permohonan pinjam ini? Stok barang akan dikurangi secara otomatis.');">
+                                                    <form action="{{ route('admin.loans.update', $loan->id) }}" method="POST" onsubmit="return confirm('Setujui permohonan pinjam ini? Stok barang akan dikurangi secara otomatis.');">
                                                         @csrf
+                                                        @method('PATCH')
                                                         <input type="hidden" name="status" value="approved">
                                                         <input type="hidden" name="admin_notes" value="Disetujui oleh admin. Silakan ambil barang di ruang logistik.">
                                                         <button type="submit" class="px-2.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-[11px] transition shadow-sm">
@@ -297,8 +328,9 @@
                                                     </form>
 
                                                     <!-- Reject Form -->
-                                                    <form action="{{ route('admin.loans.status', $loan->id) }}" method="POST" onsubmit="return confirm('Tolak permohonan pinjam ini?');">
+                                                    <form action="{{ route('admin.loans.update', $loan->id) }}" method="POST" onsubmit="return confirm('Tolak permohonan pinjam ini?');">
                                                         @csrf
+                                                        @method('PATCH')
                                                         <input type="hidden" name="status" value="rejected">
                                                         <input type="hidden" name="admin_notes" value="Mohon maaf, permohonan tidak dapat diproses saat ini.">
                                                         <button type="submit" class="px-2.5 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-semibold text-[11px] transition shadow-sm">
@@ -307,8 +339,9 @@
                                                     </form>
                                                 @elseif($loan->status == 'approved')
                                                     <!-- Mark as Returned -->
-                                                    <form action="{{ route('admin.loans.status', $loan->id) }}" method="POST" onsubmit="return confirm('Tandai barang telah dikembalikan? Stok barang akan otomatis bertambah kembali.');">
+                                                    <form action="{{ route('admin.loans.update', $loan->id) }}" method="POST" onsubmit="return confirm('Tandai barang telah dikembalikan? Stok barang akan otomatis bertambah kembali.');">
                                                         @csrf
+                                                        @method('PATCH')
                                                         <input type="hidden" name="status" value="returned">
                                                         <input type="hidden" name="admin_notes" value="Barang telah dikembalikan dalam kondisi baik dan lengkap.">
                                                         <button type="submit" class="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-semibold text-[11px] transition shadow-sm flex items-center gap-1">

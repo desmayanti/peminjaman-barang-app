@@ -43,35 +43,38 @@ class AdminLoanController extends Controller
         return view('admin.loans.index', compact('loans', 'status', 'search', 'counts'));
     }
 
-    public function updateStatus(Request $request, Loan $loan)
+    public function updateStatus(Request $request, $id)
     {
-        $validated = $request->validate([
-            'status' => 'required|in:approved,rejected,returned',
-            'admin_notes' => 'nullable|string|max:500',
-        ]);
+        // Cari data permohonan peminjaman
+        $loan = \App\Models\Loan::with('item')->findOrFail($id);
+        $newStatus = $request->status; // Status baru dari tombol yang diklik admin
 
-        $oldStatus = $loan->status;
-        $newStatus = $validated['status'];
-        $item = $loan->item;
-
-        // Stock management logic
-        if ($newStatus === 'approved' && $oldStatus === 'pending') {
-            if ($item->available_stock < $loan->quantity) {
-                return back()->with('error', "Gagal menyetujui. Stok barang {$item->name} hanya tersisa {$item->available_stock} unit.");
+        // 1. SKENARIO DISETUJUI -> STOK BERKURANG
+        if ($newStatus == 'approved' && $loan->status == 'pending') {
+            // Cek dulu, jangan sampai nyetujuin barang yang stoknya udah 0
+            if ($loan->item->available_stock >= $loan->quantity) {
+                $loan->update(['status' => 'approved']);
+                $loan->item->decrement('available_stock', $loan->quantity); // Otomatis ngurangin stok barang
+                return redirect()->back()->with('success', 'Disetujui! Stok barang otomatis berkurang.');
+            } else {
+                return redirect()->back()->with('error', 'Gagal! Stok barang tidak mencukupi.');
             }
-            $item->decrement('available_stock', $loan->quantity);
-        } elseif ($newStatus === 'returned' && $oldStatus === 'approved') {
-            $item->increment('available_stock', $loan->quantity);
-        } elseif ($newStatus === 'rejected' && $oldStatus === 'approved') {
-            $item->increment('available_stock', $loan->quantity);
         }
 
-        $loan->update([
-            'status' => $newStatus,
-            'admin_notes' => $validated['admin_notes'] ?? $loan->admin_notes,
-        ]);
+        // 2. SKENARIO DIKEMBALIKAN -> STOK BERTAMBAH (RESTOCK OTOMATIS)
+        elseif ($newStatus == 'returned' && $loan->status == 'approved') {
+            $loan->update(['status' => 'returned']);
+            $loan->item->increment('available_stock', $loan->quantity); // Otomatis balikin stok barang
+            return redirect()->back()->with('success', 'Barang dikembalikan! Stok otomatis bertambah.');
+        }
 
-        return back()->with('success', "Status permohonan #{$loan->loan_code} berhasil diperbarui menjadi: " . strtoupper($newStatus));
+        // 3. SKENARIO DITOLAK -> STOK AMAN (TIDAK BERUBAH)
+        elseif ($newStatus == 'rejected' && $loan->status == 'pending') {
+            $loan->update(['status' => 'rejected']);
+            return redirect()->back()->with('success', 'Permohonan ditolak.');
+        }
+
+        return redirect()->back();
     }
     public function updateDates(Request $request, Loan $loan)
     {

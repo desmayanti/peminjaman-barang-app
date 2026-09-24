@@ -55,50 +55,40 @@ class LoanPublicController extends Controller
 
     public function store(Request $request)
     {
+        // 1. Validasi input dari form landing page
         $validated = $request->validate([
-            'nickname' => 'required|string|max:50',
-            'borrower_name' => 'required|string|max:100',
-            'phone_number' => 'required|string|max:25',
-            'email' => 'required|email|max:100',
-            'item_id' => 'required|exists:items,id',
-            'quantity' => 'required|integer|min:1',
-            'borrow_date' => 'required|date',
-            'return_date' => 'required|date|after_or_equal:borrow_date',
-            'purpose' => 'required|string|max:1000',
-        ], [
-            'nickname.required' => 'Nickname peminjam wajib diisi.',
-            'borrower_name.required' => 'Nama lengkap peminjam wajib diisi.',
-            'phone_number.required' => 'Nomor telepon/WhatsApp wajib diisi.',
-            'email.required' => 'Alamat email wajib diisi.',
-            'email.email' => 'Format email tidak valid.',
-            'item_id.required' => 'Silakan pilih barang yang ingin dipinjam.',
-            'quantity.required' => 'Jumlah barang wajib diisi minimal 1 unit.',
-            'borrow_date.required' => 'Tanggal peminjaman wajib ditentukan.',
-            'borrow_date.after_or_equal' => 'Tanggal peminjaman tidak boleh tanggal kemarin.',
-            'return_date.required' => 'Tanggal pengembalian wajib ditentukan.',
-            'return_date.after_or_equal' => 'Tanggal pengembalian harus sama atau setelah tanggal peminjaman.',
-            'purpose.required' => 'Keperluan/tujuan peminjaman barang wajib diisi.',
+            'nama' => 'required|string|max:255',
+            'nickname' => 'required|string|max:255',
+            'whatsapp' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'tanggal_pinjam' => 'required|date',
+            'tanggal_kembali' => 'required|date|after_or_equal:tanggal_pinjam',
+            'barang_id' => 'required|exists:items,id',
+            'keterangan' => 'required|string',
         ]);
 
-        $item = Item::findOrFail($validated['item_id']);
-
-        if ($item->available_stock < $validated['quantity']) {
-            return back()->withInput()->withErrors([
-                'quantity' => "Stok barang tidak mencukupi. Sisa stok tersedia: {$item->available_stock} unit.",
-            ]);
-        }
-
-        // Generate unique loan code (e.g. PJ-78241)
+        // Generate unique loan code
         do {
             $loanCode = 'PJ-' . rand(10000, 99999);
         } while (Loan::where('loan_code', $loanCode)->exists());
 
-        $validated['loan_code'] = $loanCode;
-        $validated['status'] = 'pending';
+        // 2. Simpan ke database (Tabel loans)
+        Loan::create([
+            'loan_code' => $loanCode,
+            'borrower_name' => $request->nama,
+            'nickname' => $request->nickname,
+            'phone_number' => $request->whatsapp,
+            'email' => $request->email,
+            'borrow_date' => $request->tanggal_pinjam,
+            'return_date' => $request->tanggal_kembali,
+            'item_id' => $request->barang_id,
+            'purpose' => $request->keterangan,
+            'status' => 'pending', // Status awal masuk ke admin
+        ]);
 
-        $loan = Loan::create($validated);
-
-        return redirect()->route('loans.success', $loan->loan_code);
+        // 3. Redirect LANGSUNG ke halaman lacak status bawa keyword kodenya!
+        return redirect()->route('lacak.status', ['keyword' => $loanCode])
+                         ->with('success', 'Permohonan berhasil dikirim!');
     }
 
     public function success($loan_code)
@@ -126,5 +116,20 @@ class LoanPublicController extends Controller
         }
 
         return view('loans.track', compact('loans', 'query'));
+    }
+
+    public function trackStatus(Request $request)
+    {
+        $keyword = $request->input('keyword'); 
+        $loan = null;
+
+        if ($keyword) {
+            $loan = \App\Models\Loan::where('loan_code', $keyword)
+                      ->orWhere('phone_number', $keyword)
+                      ->with('item')
+                      ->first();
+        }
+
+        return view('lacak-status', compact('loan', 'keyword'));
     }
 }
