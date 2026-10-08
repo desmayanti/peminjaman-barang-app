@@ -18,6 +18,8 @@ class Item extends Model
         'available_stock',
         'icon',
         'status',
+        'is_consumable',
+        'max_request_qty',
     ];
 
     public function loans()

@@ -42,6 +42,7 @@
                         <div>
                             <p class="text-xs text-slate-400 uppercase tracking-wider mb-1">Kode Peminjaman</p>
                             <h2 class="text-2xl font-bold text-white">{{ $loan->loan_code }}</h2>
+                            <div class="mt-2 p-2 border border-red-500 bg-red-500/10 text-red-500 text-sm rounded-md font-medium inline-block">Salin kode ini untuk melacak status peminjaman</div>
                         </div>
                         
                         <!-- Badge Status Dinamis -->

@@ -44,6 +44,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/admin/loans/{id}/status', [AdminLoanController::class, 'updateStatus'])->name('admin.loans.update');
     Route::post('/admin/loans/{loan}/dates', [AdminLoanController::class, 'updateDates'])->name('admin.loans.dates');
 
+    // Admin Items Management
+    Route::get('/admin/items/create', [\App\Http\Controllers\Admin\AdminItemController::class, 'create'])->name('admin.items.create');
+    Route::post('/admin/items', [\App\Http\Controllers\Admin\AdminItemController::class, 'store'])->name('admin.items.store');
+
     // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

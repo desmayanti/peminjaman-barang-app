@@ -130,7 +130,7 @@
                             <select id="item_id" name="item_id" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
                                 <option value="">-- Pilih Barang dari Katalog --</option>
                                 @foreach($items as $item)
-                                    <option value="{{ $item->id }}" data-stock="{{ $item->available_stock }}" {{ (old('item_id', $selectedItem->id ?? '') == $item->id) ? 'selected' : '' }}>
+                                    <option value="{{ $item->id }}" data-stock="{{ $item->available_stock }}" data-consumable="{{ $item->is_consumable ? '1' : '0' }}" data-maxqty="{{ $item->max_request_qty }}" {{ (old('item_id', $selectedItem->id ?? '') == $item->id) ? 'selected' : '' }}>
                                         [{{ $item->category }}] {{ $item->name }} (Sisa Stok: {{ $item->available_stock }} unit)
                                     </option>
                                 @endforeach
@@ -199,7 +199,7 @@
 
                     <!-- Keperluan Peminjaman -->
                     <div>
-                        <label for="purpose" class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+                        <label id="purposeLabel" for="purpose" class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
                             Alasan / Keperluan Peminjaman <span class="text-rose-400">*</span>
                         </label>
                         <textarea id="purpose" name="purpose" rows="3" required placeholder="Jelaskan secara ringkas kegiatan atau keperluan penggunaan barang ini..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">{{ old('purpose') }}</textarea>
@@ -207,7 +207,7 @@
                 </div>
 
                 <!-- Terms & Notice -->
-                <div class="p-4 rounded-2xl bg-indigo-950/30 border border-indigo-900/50 text-xs text-indigo-300 flex items-start gap-3 mb-6">
+                <div id="termsDiv" class="p-4 rounded-2xl bg-indigo-950/30 border border-indigo-900/50 text-xs text-indigo-300 flex items-start gap-3 mb-6">
                     <svg class="w-5 h-5 text-indigo-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
@@ -222,7 +222,7 @@
                         Batal
                     </a>
                     <button type="submit" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white text-sm font-bold shadow-lg shadow-indigo-600/30 hover:scale-[1.01] active:scale-[0.99] transition flex items-center justify-center gap-2">
-                        <span>Kirim Permohonan ke Admin</span>
+                        <span id="submitBtnText">Kirim Permohonan ke Admin</span>
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                         </svg>
@@ -287,6 +287,43 @@
         // Initialize on load
         document.addEventListener('DOMContentLoaded', () => {
             calcDuration();
+
+            const itemSelect = document.getElementById('item_id');
+            const submitBtnText = document.getElementById('submitBtnText');
+            const purposeLabel = document.getElementById('purposeLabel');
+            const termsDiv = document.getElementById('termsDiv');
+            const qtyInput = document.getElementById('quantity');
+
+            function updateFormType() {
+                if(itemSelect.selectedIndex < 0) return;
+                const option = itemSelect.options[itemSelect.selectedIndex];
+                const isConsumable = option.getAttribute('data-consumable') === '1';
+                const maxQty = option.getAttribute('data-maxqty');
+                const availableStock = parseInt(option.getAttribute('data-stock'), 10) || 10;
+
+                let currentMax = availableStock;
+
+                if(isConsumable) {
+                    submitBtnText.innerText = 'Minta Barang';
+                    purposeLabel.innerHTML = 'Tujuan / Alasan Permintaan <span class="text-rose-400">*</span>';
+                    termsDiv.style.display = 'none';
+                    if (maxQty) {
+                        currentMax = Math.min(availableStock, parseInt(maxQty, 10));
+                    }
+                } else {
+                    submitBtnText.innerText = 'Kirim Permohonan ke Admin';
+                    purposeLabel.innerHTML = 'Alasan / Keperluan Peminjaman <span class="text-rose-400">*</span>';
+                    termsDiv.style.display = 'flex';
+                }
+
+                qtyInput.max = currentMax;
+                if (parseInt(qtyInput.value, 10) > currentMax) {
+                    qtyInput.value = currentMax;
+                }
+            }
+
+            itemSelect.addEventListener('change', updateFormType);
+            updateFormType();
         });
     </script>
 </body>

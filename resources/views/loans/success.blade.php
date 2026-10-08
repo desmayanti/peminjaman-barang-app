@@ -30,6 +30,7 @@
                 <div class="text-left">
                     <span class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">Kode Tiket Peminjaman</span>
                     <span class="text-2xl font-mono font-extrabold text-indigo-400 tracking-wider" id="loanCodeText">{{ $loan->loan_code }}</span>
+                    <div class="mt-2 p-2 border border-red-500 bg-red-500/10 text-red-500 text-sm rounded-md font-medium inline-block">Salin kode ini untuk melacak status peminjaman</div>
                 </div>
                 <button onclick="copyLoanCode()" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-indigo-600/30 hover:bg-indigo-600 text-indigo-200 hover:text-white text-xs font-semibold transition border border-indigo-500/40">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

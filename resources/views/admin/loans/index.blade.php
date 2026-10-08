@@ -10,6 +10,9 @@
                 </p>
             </div>
             <div class="flex items-center gap-2">
+                <a href="{{ route('admin.items.create') }}" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-blue-600 hover:bg-blue-500 text-white shadow-md transition">
+                    <span>+ Tambah Barang Baru</span>
+                </a>
                 <a href="{{ route('home') }}" target="_blank" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -317,7 +320,7 @@
     </button>
                                                 @if($loan->status == 'pending')
                                                     <!-- Approve Form -->
-                                                    <form action="{{ route('admin.loans.update', $loan->id) }}" method="POST" onsubmit="return confirm('Setujui permohonan pinjam ini? Stok barang akan dikurangi secara otomatis.');">
+                                                    <form action="{{ route('admin.loans.update', $loan->id) }}" method="POST" onsubmit="confirmApproval(event, this)">
                                                         @csrf
                                                         @method('PATCH')
                                                         <input type="hidden" name="status" value="approved">
@@ -328,7 +331,7 @@
                                                     </form>
 
                                                     <!-- Reject Form -->
-                                                    <form action="{{ route('admin.loans.update', $loan->id) }}" method="POST" onsubmit="return confirm('Tolak permohonan pinjam ini?');">
+                                                    <form action="{{ route('admin.loans.update', $loan->id) }}" method="POST" onsubmit="confirmRejection(event, this)">
                                                         @csrf
                                                         @method('PATCH')
                                                         <input type="hidden" name="status" value="rejected">
@@ -402,4 +405,46 @@
             </div>
         </div>
     @endforeach
+
+    <script>
+        function confirmApproval(event, form) {
+            event.preventDefault();
+            Swal.fire({
+                title: 'Konfirmasi Persetujuan',
+                text: 'Setujui permohonan pinjam ini? Stok barang akan dikurangi secara otomatis',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3b82f6',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: 'Ya, Setujui',
+                cancelButtonText: 'Batal',
+                background: '#1e293b',
+                color: '#f8fafc',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        }
+
+        function confirmRejection(event, form) {
+            event.preventDefault();
+            Swal.fire({
+                title: 'Tolak Permohonan?',
+                text: 'Adakah anda pasti mahu menolak permohonan pinjaman ini?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: 'Ya, Tolak',
+                cancelButtonText: 'Batal',
+                background: '#1e293b',
+                color: '#f8fafc',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        }
+    </script>
 </x-app-layout>
