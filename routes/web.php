@@ -24,6 +24,7 @@ Route::get('/', function () {
 })->name('home');
 Route::get('/pinjam/{item?}', [LoanPublicController::class, 'create'])->name('loans.create');
 Route::post('/pinjam/store', [LoanPublicController::class, 'store'])->name('pinjam.store');
+Route::post('/loans/store', [LoanPublicController::class, 'store'])->name('loans.store');
 Route::get('/pinjam/sukses/{loan_code}', [LoanPublicController::class, 'success'])->name('loans.success');
 Route::get('/cek-status', [LoanPublicController::class, 'track'])->name('loans.track');
 Route::get('/lacak-status', [LoanPublicController::class, 'trackStatus'])->name('lacak.status');
@@ -45,8 +46,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/loans/{loan}/dates', [AdminLoanController::class, 'updateDates'])->name('admin.loans.dates');
 
     // Admin Items Management
+    Route::get('/admin/items', [\App\Http\Controllers\Admin\AdminItemController::class, 'index'])->name('admin.items.index');
     Route::get('/admin/items/create', [\App\Http\Controllers\Admin\AdminItemController::class, 'create'])->name('admin.items.create');
     Route::post('/admin/items', [\App\Http\Controllers\Admin\AdminItemController::class, 'store'])->name('admin.items.store');
+    Route::get('/admin/items/{item}/edit', [\App\Http\Controllers\Admin\AdminItemController::class, 'edit'])->name('admin.items.edit');
+    Route::put('/admin/items/{item}', [\App\Http\Controllers\Admin\AdminItemController::class, 'update'])->name('admin.items.update');
+    Route::delete('/admin/items/{item}', [\App\Http\Controllers\Admin\AdminItemController::class, 'destroy'])->name('admin.items.destroy');
 
     // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

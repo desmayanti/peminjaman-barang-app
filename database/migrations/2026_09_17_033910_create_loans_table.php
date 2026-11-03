@@ -18,7 +18,9 @@ return new class extends Migration
             $table->string('email');
             $table->integer('quantity')->default(1);
             $table->date('borrow_date');
-            $table->date('return_date');
+            $table->date('return_date')->nullable();
+            $table->date('tanggal_selesai')->nullable();
+            $table->string('type')->default('pinjam');
             $table->text('purpose');
             $table->enum('status', ['pending', 'approved', 'rejected', 'returned'])->default('pending');
             $table->text('admin_notes')->nullable();

@@ -55,17 +55,42 @@ class LoanPublicController extends Controller
 
     public function store(Request $request)
     {
-        // 1. Validasi input dari form landing page
-        $validated = $request->validate([
-            'nama' => 'required|string|max:255',
+        // Deteksi jenis pengajuan ('minta' vs 'pinjam')
+        $itemId = $request->input('barang_id') ?? $request->input('item_id');
+        $item = $itemId ? Item::find($itemId) : null;
+        $isMinta = $request->input('request_type_welcome') === 'minta'
+                || $request->input('request_type') === 'minta'
+                || ($item && $item->is_consumable);
+
+        $dateStartField = $request->has('tanggal_pinjam') ? 'tanggal_pinjam' : 'borrow_date';
+        $dateEndField = $request->has('tanggal_kembali') ? 'tanggal_kembali' : 'return_date';
+
+        // 1. Validasi input: jika 'minta', tanggal selesai/kembali boleh null/tidak wajib
+        $rules = [
+            'nama' => 'sometimes|required_without:borrower_name|string|max:255',
+            'borrower_name' => 'sometimes|required_without:nama|string|max:255',
             'nickname' => 'required|string|max:255',
-            'whatsapp' => 'required|string|max:255',
+            'whatsapp' => 'sometimes|required_without:phone_number|string|max:255',
+            'phone_number' => 'sometimes|required_without:whatsapp|string|max:255',
             'email' => 'required|email|max:255',
-            'tanggal_pinjam' => 'required|date',
-            'tanggal_kembali' => 'required|date|after_or_equal:tanggal_pinjam',
-            'barang_id' => 'required|exists:items,id',
-            'keterangan' => 'required|string',
-        ]);
+            'quantity' => 'nullable|integer|min:1',
+            $dateStartField => 'required|date',
+            'barang_id' => 'sometimes|required_without:item_id|exists:items,id',
+            'item_id' => 'sometimes|required_without:barang_id|exists:items,id',
+            'keterangan' => 'sometimes|required_without:purpose|string',
+            'purpose' => 'sometimes|required_without:keterangan|string',
+        ];
+
+        if ($isMinta) {
+            $rules[$dateEndField] = 'nullable';
+        } else {
+            $rules[$dateEndField] = "required|date|after_or_equal:{$dateStartField}";
+        }
+
+        $request->validate($rules);
+
+        // Nilai tanggal_selesai dipaksa null jika jenisnya 'Minta Barang'
+        $tanggalSelesai = $isMinta ? null : ($request->input('tanggal_kembali') ?? $request->input('return_date') ?? $request->input('tanggal_selesai'));
 
         // Generate unique loan code
         do {
@@ -75,14 +100,17 @@ class LoanPublicController extends Controller
         // 2. Simpan ke database (Tabel loans)
         Loan::create([
             'loan_code' => $loanCode,
-            'borrower_name' => $request->nama,
-            'nickname' => $request->nickname,
-            'phone_number' => $request->whatsapp,
-            'email' => $request->email,
-            'borrow_date' => $request->tanggal_pinjam,
-            'return_date' => $request->tanggal_kembali,
-            'item_id' => $request->barang_id,
-            'purpose' => $request->keterangan,
+            'borrower_name' => $request->input('nama') ?? $request->input('borrower_name'),
+            'nickname' => $request->input('nickname'),
+            'phone_number' => $request->input('whatsapp') ?? $request->input('phone_number'),
+            'email' => $request->input('email'),
+            'quantity' => $request->input('quantity', 1),
+            'borrow_date' => $request->input('tanggal_pinjam') ?? $request->input('borrow_date'),
+            'return_date' => $tanggalSelesai,
+            'tanggal_selesai' => $tanggalSelesai,
+            'type' => $isMinta ? 'minta' : 'pinjam',
+            'item_id' => $itemId,
+            'purpose' => $request->input('keterangan') ?? $request->input('purpose'),
             'status' => 'pending', // Status awal masuk ke admin
         ]);
 

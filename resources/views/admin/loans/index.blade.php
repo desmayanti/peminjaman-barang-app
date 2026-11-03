@@ -2,22 +2,24 @@
     <x-slot name="header">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-                <h2 class="font-extrabold text-2xl text-gray-800 dark:text-gray-100 leading-tight">
+                <div class="flex items-center gap-2 text-xs font-semibold text-purple-400 mb-1">
+                    <a href="{{ route('dashboard') }}" class="hover:underline">Dashboard</a>
+                    <span>/</span>
+                    <span class="text-slate-400">Permohonan</span>
+                </div>
+                <h2 class="font-extrabold text-2xl sm:text-3xl text-white font-display flex items-center gap-2">
                     Manajemen Permohonan Peminjaman
                 </h2>
-                <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
+                <p class="text-xs sm:text-sm text-slate-400 mt-1">
                     Tinjau data peminjam, setujui permohonan, atau tandai barang yang telah dikembalikan.
                 </p>
             </div>
-            <div class="flex items-center gap-2">
-                <a href="{{ route('admin.items.create') }}" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-blue-600 hover:bg-blue-500 text-white shadow-md transition">
-                    <span>+ Tambah Barang Baru</span>
-                </a>
-                <a href="{{ route('home') }}" target="_blank" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+            <div class="flex items-center gap-2.5">
+                <a href="{{ route('admin.items.create') }}" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs font-bold bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-[0_0_20px_rgba(147,51,234,0.35)] transition-all transform hover:-translate-y-0.5">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                     </svg>
-                    <span>Buka Landing Page</span>
+                    <span>Tambah Barang Baru</span>
                 </a>
             </div>
         </div>
@@ -29,20 +31,20 @@
             <!-- NOTIFIKASI RESTOCK OTOMATIS -->
             @php $emptyItems = \App\Models\Item::where('available_stock', 0)->get(); @endphp
             @if($emptyItems->count() > 0)
-                <div class="bg-rose-500/10 border-l-4 border-rose-500 p-4 rounded-r-lg shadow-sm">
+                <div class="bg-rose-950/30 border border-rose-800/40 p-4 rounded-2xl shadow-sm text-xs text-rose-300">
                     <div class="flex items-start">
                         <div class="flex-shrink-0">
-                            <svg class="h-5 w-5 text-rose-500 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg class="h-5 w-5 text-rose-400 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                             </svg>
                         </div>
                         <div class="ml-3">
-                            <h3 class="text-sm font-bold text-rose-700 dark:text-rose-400">
+                            <h3 class="text-sm font-bold text-white">
                                 Peringatan Stok Habis (Restock Needed)
                             </h3>
-                            <div class="mt-1 text-sm text-rose-600 dark:text-rose-300">
+                            <div class="mt-1 text-xs text-rose-300">
                                 <p>Beberapa barang berikut saat ini kehabisan stok. Saat barang dikembalikan, notifikasi ini akan otomatis hilang untuk barang tersebut:</p>
-                                <ul class="list-disc pl-5 mt-2 space-y-1">
+                                <ul class="list-disc pl-5 mt-2 space-y-0.5">
                                     @foreach($emptyItems as $emptyItem)
                                         <li><strong>{{ $emptyItem->code }}</strong> - {{ $emptyItem->name }}</li>
                                     @endforeach
@@ -55,8 +57,8 @@
 
             <!-- Flash Alerts -->
             @if(session('success'))
-                <div class="p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-200 text-sm flex items-center gap-3">
-                    <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-sm flex items-center gap-3">
+                    <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                     </svg>
                     <span>{{ session('success') }}</span>
@@ -64,8 +66,8 @@
             @endif
 
             @if(session('error'))
-                <div class="p-4 rounded-2xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-rose-800 dark:text-rose-200 text-sm flex items-center gap-3">
-                    <svg class="w-5 h-5 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="p-4 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-sm flex items-center gap-3">
+                    <svg class="w-5 h-5 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     <span>{{ session('error') }}</span>
@@ -74,40 +76,40 @@
 
             <!-- Quick Metrics Grid -->
             <div class="grid grid-cols-2 lg:grid-cols-5 gap-4">
-                <a href="{{ route('admin.loans.index', ['status' => 'all']) }}" class="p-5 rounded-2xl bg-white dark:bg-gray-800 border {{ ($status == 'all') ? 'border-indigo-500 ring-2 ring-indigo-500/20' : 'border-gray-200 dark:border-gray-700' }} shadow-sm hover:shadow transition">
-                    <span class="text-xs font-medium text-gray-500 dark:text-gray-400 block">Semua Permohonan</span>
-                    <span class="text-2xl font-extrabold text-gray-900 dark:text-white mt-1 block">{{ $counts['all'] }}</span>
+                <a href="{{ route('admin.loans.index', ['status' => 'all']) }}" class="p-4 sm:p-5 rounded-2xl bg-[#0e0e1a]/80 backdrop-blur-xl border {{ ($status == 'all') ? 'border-purple-500 ring-2 ring-purple-500/30' : 'border-white/[0.08]' }} shadow-xl hover:border-purple-500/40 transition-all">
+                    <span class="text-xs font-semibold text-slate-400 block">Semua Permohonan</span>
+                    <span class="text-2xl font-extrabold text-white font-display mt-1 block">{{ $counts['all'] }}</span>
                 </a>
 
-                <a href="{{ route('admin.loans.index', ['status' => 'pending']) }}" class="p-5 rounded-2xl bg-white dark:bg-gray-800 border {{ ($status == 'pending') ? 'border-amber-500 ring-2 ring-amber-500/20' : 'border-gray-200 dark:border-gray-700' }} shadow-sm hover:shadow transition">
-                    <span class="text-xs font-medium text-amber-600 dark:text-amber-400 flex items-center gap-1.5">
-                        <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+                <a href="{{ route('admin.loans.index', ['status' => 'pending']) }}" class="p-4 sm:p-5 rounded-2xl bg-[#0e0e1a]/80 backdrop-blur-xl border {{ ($status == 'pending') ? 'border-amber-500 ring-2 ring-amber-500/30' : 'border-white/[0.08]' }} shadow-xl hover:border-amber-500/40 transition-all">
+                    <span class="text-xs font-semibold text-amber-400 flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
                         Menunggu Review
                     </span>
-                    <span class="text-2xl font-extrabold text-amber-600 dark:text-amber-400 mt-1 block">{{ $counts['pending'] }}</span>
+                    <span class="text-2xl font-extrabold text-amber-400 font-display mt-1 block">{{ $counts['pending'] }}</span>
                 </a>
 
-                <a href="{{ route('admin.loans.index', ['status' => 'approved']) }}" class="p-5 rounded-2xl bg-white dark:bg-gray-800 border {{ ($status == 'approved') ? 'border-emerald-500 ring-2 ring-emerald-500/20' : 'border-gray-200 dark:border-gray-700' }} shadow-sm hover:shadow transition">
-                    <span class="text-xs font-medium text-emerald-600 dark:text-emerald-400 block">Disetujui / Dipinjam</span>
-                    <span class="text-2xl font-extrabold text-emerald-600 dark:text-emerald-400 mt-1 block">{{ $counts['approved'] }}</span>
+                <a href="{{ route('admin.loans.index', ['status' => 'approved']) }}" class="p-4 sm:p-5 rounded-2xl bg-[#0e0e1a]/80 backdrop-blur-xl border {{ ($status == 'approved') ? 'border-emerald-500 ring-2 ring-emerald-500/30' : 'border-white/[0.08]' }} shadow-xl hover:border-emerald-500/40 transition-all">
+                    <span class="text-xs font-semibold text-emerald-400 block">Disetujui / Dipinjam</span>
+                    <span class="text-2xl font-extrabold text-emerald-400 font-display mt-1 block">{{ $counts['approved'] }}</span>
                 </a>
 
-                <a href="{{ route('admin.loans.index', ['status' => 'returned']) }}" class="p-5 rounded-2xl bg-white dark:bg-gray-800 border {{ ($status == 'returned') ? 'border-blue-500 ring-2 ring-blue-500/20' : 'border-gray-200 dark:border-gray-700' }} shadow-sm hover:shadow transition">
-                    <span class="text-xs font-medium text-blue-600 dark:text-blue-400 block">Sudah Dikembalikan</span>
-                    <span class="text-2xl font-extrabold text-blue-600 dark:text-blue-400 mt-1 block">{{ $counts['returned'] }}</span>
+                <a href="{{ route('admin.loans.index', ['status' => 'returned']) }}" class="p-4 sm:p-5 rounded-2xl bg-[#0e0e1a]/80 backdrop-blur-xl border {{ ($status == 'returned') ? 'border-blue-500 ring-2 ring-blue-500/30' : 'border-white/[0.08]' }} shadow-xl hover:border-blue-500/40 transition-all">
+                    <span class="text-xs font-semibold text-blue-400 block">Sudah Dikembalikan</span>
+                    <span class="text-2xl font-extrabold text-blue-400 font-display mt-1 block">{{ $counts['returned'] }}</span>
                 </a>
 
-                <a href="{{ route('admin.loans.index', ['status' => 'rejected']) }}" class="p-5 rounded-2xl bg-white dark:bg-gray-800 border {{ ($status == 'rejected') ? 'border-rose-500 ring-2 ring-rose-500/20' : 'border-gray-200 dark:border-gray-700' }} shadow-sm hover:shadow transition">
-                    <span class="text-xs font-medium text-rose-600 dark:text-rose-400 block">Permohonan Ditolak</span>
-                    <span class="text-2xl font-extrabold text-rose-600 dark:text-rose-400 mt-1 block">{{ $counts['rejected'] }}</span>
+                <a href="{{ route('admin.loans.index', ['status' => 'rejected']) }}" class="p-4 sm:p-5 rounded-2xl bg-[#0e0e1a]/80 backdrop-blur-xl border {{ ($status == 'rejected') ? 'border-rose-500 ring-2 ring-rose-500/30' : 'border-white/[0.08]' }} shadow-xl hover:border-rose-500/40 transition-all">
+                    <span class="text-xs font-semibold text-rose-400 block">Permohonan Ditolak</span>
+                    <span class="text-2xl font-extrabold text-rose-400 font-display mt-1 block">{{ $counts['rejected'] }}</span>
                 </a>
             </div>
 
             <!-- Filter & Search Toolbar -->
-            <div class="bg-white dark:bg-gray-800 rounded-3xl p-5 border border-gray-200 dark:border-gray-700 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div class="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto text-xs">
+            <div class="bg-[#0e0e1a]/80 backdrop-blur-xl rounded-2xl p-4 sm:p-5 border border-white/[0.08] shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto text-xs pb-1 sm:pb-0">
                     @foreach(['all' => 'Semua', 'pending' => 'Pending', 'approved' => 'Disetujui', 'returned' => 'Dikembalikan', 'rejected' => 'Ditolak'] as $key => $label)
-                        <a href="{{ route('admin.loans.index', ['status' => $key, 'search' => $search]) }}" class="px-3.5 py-2 rounded-xl font-semibold transition whitespace-nowrap {{ ($status == $key) ? 'bg-indigo-600 text-white' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700' }}">
+                        <a href="{{ route('admin.loans.index', ['status' => $key, 'search' => $search]) }}" class="px-3.5 py-2 rounded-xl font-semibold transition whitespace-nowrap {{ ($status == $key) ? 'bg-purple-600 text-white shadow-md shadow-purple-600/30' : 'text-slate-400 hover:text-white hover:bg-white/[0.05]' }}">
                             {{ $label }}
                         </a>
                     @endforeach
@@ -115,18 +117,18 @@
 
                 <form action="{{ route('admin.loans.index') }}" method="GET" class="w-full sm:w-auto flex items-center gap-2">
                     <input type="hidden" name="status" value="{{ $status }}">
-                    <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Cari nama/nickname/kode..." class="w-full sm:w-64 bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl px-3.5 py-2 text-xs text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-3.5 py-2 rounded-xl transition">
+                    <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Cari nama/nickname/kode..." class="w-full sm:w-64 bg-[#131224] border border-white/10 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:ring-2 focus:ring-purple-500/50 focus:outline-none">
+                    <button type="submit" class="bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold px-4 py-2 rounded-xl transition shadow-md shadow-purple-600/30">
                         Cari
                     </button>
                     @if($search)
-                        <a href="{{ route('admin.loans.index', ['status' => $status]) }}" class="text-xs text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 underline">Reset</a>
+                        <a href="{{ route('admin.loans.index', ['status' => $status]) }}" class="text-xs text-slate-400 hover:text-purple-300 underline">Reset</a>
                     @endif
                 </form>
             </div>
 
             <!-- Loans Table -->
-            <div class="bg-white dark:bg-gray-800 rounded-3xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
+            <div class="bg-[#0e0e1a]/80 backdrop-blur-xl rounded-3xl border border-white/[0.08] shadow-2xl overflow-hidden">
                 @if($loans->isEmpty())
                     <div class="text-center py-16 px-4">
                         <svg class="w-12 h-12 text-gray-400 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -162,13 +164,28 @@
                                     <div class="font-bold text-gray-900 dark:text-white">
                                         {{ $loan->borrower_name }} <span class="font-normal text-indigo-500">({{ $loan->nickname }})</span>
                                     </div>
-                                    <div class="text-gray-600 dark:text-gray-300 flex items-center justify-between">
+                                    <div class="text-gray-600 dark:text-gray-300 flex items-center justify-between flex-wrap gap-1">
                                         <span>Barang:</span>
-                                        <span class="font-semibold">{{ $loan->item->name ?? 'Barang' }} ({{ $loan->quantity }} Unit)</span>
+                                        <span class="font-semibold flex items-center gap-1.5">
+                                            {{ $loan->item->name ?? 'Barang' }} ({{ $loan->quantity }} Unit)
+                                            @if($loan->type === 'minta' || ($loan->item && $loan->item->is_consumable) || empty($loan->tanggal_selesai))
+                                                <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800">
+                                                    Diminta / Habis Pakai
+                                                </span>
+                                            @else
+                                                <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                                                    Dipinjam
+                                                </span>
+                                            @endif
+                                        </span>
                                     </div>
                                     <div class="text-gray-600 dark:text-gray-300 flex items-center justify-between">
                                         <span>Jadwal:</span>
-                                        <span>{{ \Carbon\Carbon::parse($loan->borrow_date)->format('d M') }} - {{ \Carbon\Carbon::parse($loan->return_date)->format('d M Y') }}</span>
+                                        @if($loan->type === 'minta' || ($loan->item && $loan->item->is_consumable) || empty($loan->tanggal_selesai))
+                                            <span class="text-gray-400 dark:text-gray-500 italic">Barang Habis Pakai (Tidak perlu dikembalikan)</span>
+                                        @else
+                                            <span>{{ \Carbon\Carbon::parse($loan->borrow_date)->format('d M') }} - {{ \Carbon\Carbon::parse($loan->tanggal_selesai ?? $loan->return_date)->format('d M Y') }}</span>
+                                        @endif
                                     </div>
                                     <div class="flex items-center gap-3 pt-1 border-t border-gray-200 dark:border-gray-800">
                                         <a href="https://wa.me/{{ preg_replace('/^0/', '62', preg_replace('/[^0-9]/', '', $loan->phone_number)) }}" target="_blank" class="text-emerald-500 font-semibold flex items-center gap-1">
@@ -179,9 +196,11 @@
 
                                 <!-- Action Buttons on Mobile -->
                                 <div class="flex flex-wrap items-center gap-2 pt-1">
-                                    <button type="button" onclick="document.getElementById('editDateModal_{{ $loan->id }}').classList.remove('hidden')" class="flex-1 py-2 px-3 rounded-xl border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 text-center text-xs font-semibold">
-                                        Ubah Tanggal
-                                    </button>
+                                    @if(!($loan->type === 'minta' || ($loan->item && $loan->item->is_consumable) || empty($loan->tanggal_selesai)))
+                                        <button type="button" onclick="document.getElementById('editDateModal_{{ $loan->id }}').classList.remove('hidden')" class="flex-1 py-2 px-3 rounded-xl border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 text-center text-xs font-semibold">
+                                            Ubah Tanggal
+                                        </button>
+                                    @endif
 
                                     @if($loan->status == 'pending')
                                         <form action="{{ route('admin.loans.update', $loan->id) }}" method="POST" class="flex-1">
@@ -189,7 +208,11 @@
                                             @method('PATCH')
                                             <input type="hidden" name="status" value="approved">
                                             <button type="submit" class="w-full py-2 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-center text-xs font-bold">
-                                                Setujui
+                                                @if($loan->type === 'minta' || ($loan->item && $loan->item->is_consumable) || empty($loan->tanggal_selesai))
+                                                    Beri / Setujui
+                                                @else
+                                                    Setujui
+                                                @endif
                                             </button>
                                         </form>
                                         <form action="{{ route('admin.loans.update', $loan->id) }}" method="POST" class="flex-1">
@@ -201,14 +224,18 @@
                                             </button>
                                         </form>
                                     @elseif($loan->status == 'approved')
-                                        <form action="{{ route('admin.loans.update', $loan->id) }}" method="POST" class="flex-1">
-                                            @csrf
-                                            @method('PATCH')
-                                            <input type="hidden" name="status" value="returned">
-                                            <button type="submit" class="w-full py-2 px-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-center text-xs font-bold">
-                                                Tandai Kembali
-                                            </button>
-                                        </form>
+                                        @if(!($loan->type === 'minta' || ($loan->item && $loan->item->is_consumable) || empty($loan->tanggal_selesai)))
+                                            <form action="{{ route('admin.loans.update', $loan->id) }}" method="POST" class="flex-1">
+                                                @csrf
+                                                @method('PATCH')
+                                                <input type="hidden" name="status" value="returned">
+                                                <button type="submit" class="w-full py-2 px-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-center text-xs font-bold">
+                                                    Tandai Kembali
+                                                </button>
+                                            </form>
+                                        @else
+                                            <span class="text-xs text-gray-400 italic flex-1 text-center py-2">Selesai Diberikan</span>
+                                        @endif
                                     @endif
                                 </div>
                             </div>
@@ -264,8 +291,17 @@
 
                                         <!-- Barang & Qty -->
                                         <td class="py-4 px-5">
-                                            <div class="font-semibold text-gray-900 dark:text-gray-100">
-                                                {{ $loan->item->name ?? 'Barang Terhapus' }}
+                                            <div class="font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2 flex-wrap">
+                                                <span>{{ $loan->item->name ?? 'Barang Terhapus' }}</span>
+                                                @if($loan->type === 'minta' || ($loan->item && $loan->item->is_consumable) || empty($loan->tanggal_selesai))
+                                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800">
+                                                        Diminta / Habis Pakai
+                                                    </span>
+                                                @else
+                                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                                                        Dipinjam
+                                                    </span>
+                                                @endif
                                             </div>
                                             <span class="text-[11px] text-gray-500 block">
                                                 Jumlah: <strong class="text-indigo-600 dark:text-indigo-400">{{ $loan->quantity }} Unit</strong>
@@ -275,12 +311,18 @@
 
                                         <!-- Periode -->
                                         <td class="py-4 px-5">
-                                            <span class="font-medium text-gray-900 dark:text-gray-100 block">
-                                                {{ \Carbon\Carbon::parse($loan->borrow_date)->format('d M') }} - {{ \Carbon\Carbon::parse($loan->return_date)->format('d M Y') }}
-                                            </span>
-                                            <span class="text-[11px] text-gray-400">
-                                                Durasi: {{ \Carbon\Carbon::parse($loan->borrow_date)->diffInDays(\Carbon\Carbon::parse($loan->return_date)) + 1 }} Hari
-                                            </span>
+                                            @if($loan->type === 'minta' || ($loan->item && $loan->item->is_consumable) || empty($loan->tanggal_selesai))
+                                                <span class="text-xs text-gray-400 dark:text-gray-500 italic block">
+                                                    Barang Habis Pakai (Tidak perlu dikembalikan)
+                                                </span>
+                                            @else
+                                                <span class="font-medium text-gray-900 dark:text-gray-100 block">
+                                                    {{ \Carbon\Carbon::parse($loan->borrow_date)->format('d M') }} - {{ \Carbon\Carbon::parse($loan->tanggal_selesai ?? $loan->return_date)->format('d M Y') }}
+                                                </span>
+                                                <span class="text-[11px] text-gray-400">
+                                                    Durasi: {{ \Carbon\Carbon::parse($loan->borrow_date)->diffInDays(\Carbon\Carbon::parse($loan->tanggal_selesai ?? $loan->return_date)) + 1 }} Hari
+                                                </span>
+                                            @endif
                                         </td>
 
                                         <!-- Status Badge -->
@@ -314,10 +356,13 @@
                                         <!-- Actions Buttons -->
                                         <td class="py-4 px-5 text-right">
                                             <div class="flex items-center justify-end gap-1.5">
-    <!-- Tombol Edit Tanggal -->
-    <button type="button" onclick="document.getElementById('editDateModal_{{ $loan->id }}').classList.remove('hidden')" class="px-2 py-1.5 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 text-[11px] font-medium transition" title="Ubah Tanggal Peminjaman/Pengembalian">
-        Ubah Tanggal
-    </button>
+                                                @if(!($loan->type === 'minta' || ($loan->item && $loan->item->is_consumable) || empty($loan->tanggal_selesai)))
+                                                    <!-- Tombol Edit Tanggal -->
+                                                    <button type="button" onclick="document.getElementById('editDateModal_{{ $loan->id }}').classList.remove('hidden')" class="px-2 py-1.5 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 text-[11px] font-medium transition" title="Ubah Tanggal Peminjaman/Pengembalian">
+                                                        Ubah Tanggal
+                                                    </button>
+                                                @endif
+
                                                 @if($loan->status == 'pending')
                                                     <!-- Approve Form -->
                                                     <form action="{{ route('admin.loans.update', $loan->id) }}" method="POST" onsubmit="confirmApproval(event, this)">
@@ -326,7 +371,11 @@
                                                         <input type="hidden" name="status" value="approved">
                                                         <input type="hidden" name="admin_notes" value="Disetujui oleh admin. Silakan ambil barang di ruang logistik.">
                                                         <button type="submit" class="px-2.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-[11px] transition shadow-sm">
-                                                            Setujui
+                                                            @if($loan->type === 'minta' || ($loan->item && $loan->item->is_consumable) || empty($loan->tanggal_selesai))
+                                                                Beri / Setujui
+                                                            @else
+                                                                Setujui
+                                                            @endif
                                                         </button>
                                                     </form>
 
@@ -341,16 +390,20 @@
                                                         </button>
                                                     </form>
                                                 @elseif($loan->status == 'approved')
-                                                    <!-- Mark as Returned -->
-                                                    <form action="{{ route('admin.loans.update', $loan->id) }}" method="POST" onsubmit="return confirm('Tandai barang telah dikembalikan? Stok barang akan otomatis bertambah kembali.');">
-                                                        @csrf
-                                                        @method('PATCH')
-                                                        <input type="hidden" name="status" value="returned">
-                                                        <input type="hidden" name="admin_notes" value="Barang telah dikembalikan dalam kondisi baik dan lengkap.">
-                                                        <button type="submit" class="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-semibold text-[11px] transition shadow-sm flex items-center gap-1">
-                                                            <span>Barang Kembali</span>
-                                                        </button>
-                                                    </form>
+                                                    @if(!($loan->type === 'minta' || ($loan->item && $loan->item->is_consumable) || empty($loan->tanggal_selesai)))
+                                                        <!-- Mark as Returned -->
+                                                        <form action="{{ route('admin.loans.update', $loan->id) }}" method="POST" onsubmit="return confirm('Tandai barang telah dikembalikan? Stok barang akan otomatis bertambah kembali.');">
+                                                            @csrf
+                                                            @method('PATCH')
+                                                            <input type="hidden" name="status" value="returned">
+                                                            <input type="hidden" name="admin_notes" value="Barang telah dikembalikan dalam kondisi baik dan lengkap.">
+                                                            <button type="submit" class="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-semibold text-[11px] transition shadow-sm flex items-center gap-1">
+                                                                <span>Barang Kembali</span>
+                                                            </button>
+                                                        </form>
+                                                    @else
+                                                        <span class="text-gray-400 text-[11px] italic">Selesai Diberikan</span>
+                                                    @endif
                                                 @else
                                                     <span class="text-gray-400 text-[11px]">Selesai</span>
                                                 @endif

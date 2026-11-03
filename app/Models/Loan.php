@@ -19,6 +19,8 @@ class Loan extends Model
         'quantity',
         'borrow_date',
         'return_date',
+        'tanggal_selesai',
+        'type',
         'purpose',
         'status',
         'admin_notes',
@@ -27,7 +29,32 @@ class Loan extends Model
     protected $casts = [
         'borrow_date' => 'date',
         'return_date' => 'date',
+        'tanggal_selesai' => 'date',
     ];
+
+    public function getTanggalSelesaiAttribute($value)
+    {
+        return $value ?? $this->return_date;
+    }
+
+    public function getReturnDateAttribute($value)
+    {
+        return $value ?? $this->attributes['tanggal_selesai'] ?? null;
+    }
+
+    public function getTypeAttribute($value)
+    {
+        if ($value) {
+            return $value;
+        }
+        if ($this->item && $this->item->is_consumable) {
+            return 'minta';
+        }
+        if (empty($this->return_date) && empty($this->attributes['tanggal_selesai'] ?? null)) {
+            return 'minta';
+        }
+        return 'pinjam';
+    }
 
     public function item()
     {
