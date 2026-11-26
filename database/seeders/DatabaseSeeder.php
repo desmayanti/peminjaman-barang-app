@@ -22,6 +22,15 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
+        User::updateOrCreate(
+            ['email' => 'admin@sarpras.sch.id'],
+            [
+                'name' => 'Admin Sarpras',
+                'password' => Hash::make('password123'),
+                'is_admin' => true,
+            ]
+        );
+
         $this->call(ItemSeeder::class);
 
         // 2. Seed Realistic Catalog Items

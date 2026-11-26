@@ -9,6 +9,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'PinjamBarang') }} &mdash; Panel Administrasi</title>
+        <link rel="icon" type="image/webp" href="{{ asset('images/logo-pb.webp') }}">
 
         <!-- Smart Theme Override & Anti-FOUC Engine -->
         <x-smart-theme-override />

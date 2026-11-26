@@ -6,11 +6,7 @@
                 <!-- Brand / Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}" class="flex items-center gap-3 group">
-                        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-purple-600 to-indigo-500 flex items-center justify-center text-white shadow-[0_0_15px_rgba(147,51,234,0.4)] group-hover:scale-105 transition-transform">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                            </svg>
-                        </div>
+                        <img src="{{ asset('images/logo-pb.webp') }}" alt="Logo PB" class="h-9 w-9 rounded-xl object-cover shadow-sm">
                         <div class="flex items-center gap-2">
                             <span class="text-slate-800 dark:text-white font-extrabold text-base tracking-tight font-display">Pinjam<span class="text-purple-600 dark:text-purple-400">Barang.</span></span>
                             <span class="text-[10px] font-extrabold px-1.5 py-0.5 rounded-md bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-500/30 uppercase tracking-wider">ADMIN</span>
@@ -25,7 +21,7 @@
                 <!-- Navigation Links -->
                 <div class="hidden sm:flex sm:items-center sm:gap-2">
                     <!-- Dashboard -->
-                    <a href="{{ route('dashboard') }}" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all {{ request()->routeIs('dashboard') ? 'bg-purple-100 dark:bg-purple-600/20 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-500/40 shadow-sm shadow-purple-100 dark:shadow-[0_0_15px_rgba(147,51,234,0.2)]' : 'text-slate-600 dark:text-slate-400 hover:text-purple-700 dark:hover:text-white hover:bg-purple-50 dark:hover:bg-white/[0.05] border border-transparent' }}">
+                    <a href="{{ route('dashboard') }}" class="admin-nav-item inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all {{ request()->routeIs('dashboard') ? 'active-tab bg-purple-100 dark:bg-purple-600/20 text-slate-800 dark:text-purple-300 border border-purple-200 dark:border-purple-500/40 shadow-sm shadow-purple-100 dark:shadow-[0_0_15px_rgba(147,51,234,0.2)]' : 'text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-purple-50 dark:hover:bg-white/[0.05] border border-transparent' }}">
                         <svg class="w-4 h-4 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
                         </svg>
@@ -33,20 +29,20 @@
                     </a>
 
                     <!-- Permohonan Pinjam -->
-                    <a href="{{ route('admin.loans.index') }}" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all {{ request()->routeIs('admin.loans.*') ? 'bg-purple-100 dark:bg-purple-600/20 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-500/40 shadow-sm shadow-purple-100 dark:shadow-[0_0_15px_rgba(147,51,234,0.2)]' : 'text-slate-600 dark:text-slate-400 hover:text-purple-700 dark:hover:text-white hover:bg-purple-50 dark:hover:bg-white/[0.05] border border-transparent' }}">
+                    <a href="{{ route('admin.loans.index') }}" class="admin-nav-item inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all {{ request()->routeIs('admin.loans.*') ? 'active-tab bg-purple-100 dark:bg-purple-600/20 text-slate-800 dark:text-purple-300 border border-purple-200 dark:border-purple-500/40 shadow-sm shadow-purple-100 dark:shadow-[0_0_15px_rgba(147,51,234,0.2)]' : 'text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-purple-50 dark:hover:bg-white/[0.05] border border-transparent' }}">
                         <svg class="w-4 h-4 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                         </svg>
                         <span>Permohonan Pinjam</span>
                         @if($pendingCount > 0)
-                            <span class="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-amber-500 text-slate-950 shadow-sm animate-pulse">
+                            <span class="pending-badge px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-amber-500 text-slate-950 shadow-sm animate-pulse">
                                 {{ $pendingCount }}
                             </span>
                         @endif
                     </a>
 
                     <!-- Katalog Aset -->
-                    <a href="{{ route('admin.items.index') }}" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all {{ request()->routeIs('admin.items.*') ? 'bg-purple-100 dark:bg-purple-600/20 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-500/40 shadow-sm shadow-purple-100 dark:shadow-[0_0_15px_rgba(147,51,234,0.2)]' : 'text-slate-600 dark:text-slate-400 hover:text-purple-700 dark:hover:text-white hover:bg-purple-50 dark:hover:bg-white/[0.05] border border-transparent' }}">
+                    <a href="{{ route('admin.items.index') }}" class="admin-nav-item inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all {{ request()->routeIs('admin.items.*') ? 'active-tab bg-purple-100 dark:bg-purple-600/20 text-slate-800 dark:text-purple-300 border border-purple-200 dark:border-purple-500/40 shadow-sm shadow-purple-100 dark:shadow-[0_0_15px_rgba(147,51,234,0.2)]' : 'text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-purple-50 dark:hover:bg-white/[0.05] border border-transparent' }}">
                         <svg class="w-4 h-4 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                         </svg>
@@ -58,7 +54,7 @@
             <!-- Right Nav Items -->
             <div class="hidden sm:flex sm:items-center sm:gap-3">
                 <!-- External Landing Link -->
-                <a href="{{ route('home') }}" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-purple-700 dark:hover:text-white bg-purple-50/80 dark:bg-white/[0.04] hover:bg-purple-100 dark:hover:bg-white/[0.08] border border-purple-200/80 dark:border-white/10 transition-all" title="Buka website publik">
+                <a href="{{ route('home') }}" target="_blank" class="admin-nav-item inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white bg-purple-50/80 dark:bg-white/[0.04] hover:bg-purple-100 dark:hover:bg-white/[0.08] border border-purple-200/80 dark:border-white/10 transition-all" title="Buka website publik">
                     <svg class="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                     </svg>
@@ -70,7 +66,7 @@
 
                 <!-- User Dropdown Menu -->
                 <div class="relative" x-data="{ userOpen: false }" @click.outside="userOpen = false">
-                    <button @click="userOpen = !userOpen" class="flex items-center gap-2.5 p-1.5 pr-3 rounded-2xl bg-purple-50/70 dark:bg-white/[0.04] hover:bg-purple-100/90 dark:hover:bg-white/[0.08] border border-purple-200/70 dark:border-white/10 text-slate-700 dark:text-slate-200 transition-all focus:outline-none">
+                    <button @click="userOpen = !userOpen" class="admin-user-btn flex items-center gap-2.5 p-1.5 pr-3 rounded-2xl bg-purple-50/70 dark:bg-white/[0.04] hover:bg-purple-100/90 dark:hover:bg-white/[0.08] border border-purple-200/70 dark:border-white/10 text-slate-800 dark:text-slate-200 transition-all focus:outline-none">
                         <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center text-white text-xs font-extrabold shadow-sm">
                             {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                         </div>
@@ -142,21 +138,21 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden border-t border-purple-100 dark:border-white/[0.08] bg-white dark:bg-[#0c0c17]">
         <div class="pt-3 pb-3 px-4 space-y-1.5">
-            <a href="{{ route('dashboard') }}" class="block px-3 py-2.5 rounded-xl text-sm font-semibold {{ request()->routeIs('dashboard') ? 'bg-purple-100 dark:bg-purple-600/20 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-500/30' : 'text-slate-700 dark:text-slate-300 hover:bg-purple-50 dark:hover:bg-white/[0.05]' }}">
+            <a href="{{ route('dashboard') }}" class="admin-nav-item block px-3 py-2.5 rounded-xl text-sm font-semibold {{ request()->routeIs('dashboard') ? 'active-tab bg-purple-100 dark:bg-purple-600/20 text-slate-800 dark:text-purple-300 border border-purple-200 dark:border-purple-500/30' : 'text-slate-700 dark:text-slate-300 hover:bg-purple-50 dark:hover:bg-white/[0.05]' }}">
                 Dashboard
             </a>
-            <a href="{{ route('admin.loans.index') }}" class="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-semibold {{ request()->routeIs('admin.loans.*') ? 'bg-purple-100 dark:bg-purple-600/20 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-500/30' : 'text-slate-700 dark:text-slate-300 hover:bg-purple-50 dark:hover:bg-white/[0.05]' }}">
+            <a href="{{ route('admin.loans.index') }}" class="admin-nav-item flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-semibold {{ request()->routeIs('admin.loans.*') ? 'active-tab bg-purple-100 dark:bg-purple-600/20 text-slate-800 dark:text-purple-300 border border-purple-200 dark:border-purple-500/30' : 'text-slate-700 dark:text-slate-300 hover:bg-purple-50 dark:hover:bg-white/[0.05]' }}">
                 <span>Permohonan Pinjam</span>
                 @if($pendingCount > 0)
-                    <span class="px-2 py-0.5 rounded-full text-xs font-bold bg-amber-500 text-slate-950">
+                    <span class="pending-badge px-2 py-0.5 rounded-full text-xs font-bold bg-amber-500 text-slate-950">
                         {{ $pendingCount }}
                     </span>
                 @endif
             </a>
-            <a href="{{ route('admin.items.index') }}" class="block px-3 py-2.5 rounded-xl text-sm font-semibold {{ request()->routeIs('admin.items.*') ? 'bg-purple-100 dark:bg-purple-600/20 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-500/30' : 'text-slate-700 dark:text-slate-300 hover:bg-purple-50 dark:hover:bg-white/[0.05]' }}">
+            <a href="{{ route('admin.items.index') }}" class="admin-nav-item block px-3 py-2.5 rounded-xl text-sm font-semibold {{ request()->routeIs('admin.items.*') ? 'active-tab bg-purple-100 dark:bg-purple-600/20 text-slate-800 dark:text-purple-300 border border-purple-200 dark:border-purple-500/30' : 'text-slate-700 dark:text-slate-300 hover:bg-purple-50 dark:hover:bg-white/[0.05]' }}">
                 Katalog Aset / Inventaris
             </a>
-            <a href="{{ route('home') }}" target="_blank" class="block px-3 py-2.5 rounded-xl text-sm font-semibold text-purple-600 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-white/[0.05]">
+            <a href="{{ route('home') }}" target="_blank" class="admin-nav-item block px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-700 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-white/[0.05]">
                 🌐 Buka Website Publik
             </a>
         </div>

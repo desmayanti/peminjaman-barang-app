@@ -31,22 +31,22 @@
             <!-- NOTIFIKASI RESTOCK OTOMATIS -->
             @php $emptyItems = \App\Models\Item::where('available_stock', 0)->get(); @endphp
             @if($emptyItems->count() > 0)
-                <div class="bg-rose-950/30 border border-rose-800/40 p-4 rounded-2xl shadow-sm text-xs text-rose-300">
+                <div class="restock-alert-box bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-800/40 p-4 rounded-2xl shadow-sm text-xs text-rose-800 dark:text-rose-300">
                     <div class="flex items-start">
                         <div class="flex-shrink-0">
-                            <svg class="h-5 w-5 text-rose-400 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg class="h-5 w-5 text-rose-600 dark:text-rose-400 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                             </svg>
                         </div>
                         <div class="ml-3">
-                            <h3 class="text-sm font-bold text-white">
+                            <h3 class="text-sm font-bold text-rose-900 dark:text-white">
                                 Peringatan Stok Habis (Restock Needed)
                             </h3>
-                            <div class="mt-1 text-xs text-rose-300">
-                                <p>Beberapa barang berikut saat ini kehabisan stok. Saat barang dikembalikan, notifikasi ini akan otomatis hilang untuk barang tersebut:</p>
+                            <div class="mt-1 text-xs text-rose-800 dark:text-rose-300">
+                                <p class="text-rose-800 dark:text-rose-300 font-medium">Beberapa barang berikut saat ini kehabisan stok. Saat barang dikembalikan, notifikasi ini akan otomatis hilang untuk barang tersebut:</p>
                                 <ul class="list-disc pl-5 mt-2 space-y-0.5">
                                     @foreach($emptyItems as $emptyItem)
-                                        <li><strong>{{ $emptyItem->code }}</strong> - {{ $emptyItem->name }}</li>
+                                        <li><strong class="restock-item-badge text-red-800 dark:text-rose-300 font-bold font-mono">{{ $emptyItem->code }}</strong> - <span class="text-red-700 dark:text-red-300 font-semibold">{{ $emptyItem->name }}</span></li>
                                     @endforeach
                                 </ul>
                             </div>
@@ -76,59 +76,64 @@
 
             <!-- Quick Metrics Grid -->
             <div class="grid grid-cols-2 lg:grid-cols-5 gap-4">
-                <a href="{{ route('admin.loans.index', ['status' => 'all']) }}" class="p-4 sm:p-5 rounded-2xl bg-[#0e0e1a]/80 backdrop-blur-xl border {{ ($status == 'all') ? 'border-purple-500 ring-2 ring-purple-500/30' : 'border-white/[0.08]' }} shadow-xl hover:border-purple-500/40 transition-all">
-                    <span class="text-xs font-semibold text-slate-400 block">Semua Permohonan</span>
-                    <span class="text-2xl font-extrabold text-white font-display mt-1 block">{{ $counts['all'] }}</span>
+                <a href="{{ route('admin.loans.index', ['status' => 'all']) }}" class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-[#0e0e1a]/80 backdrop-blur-xl border {{ ($status == 'all') ? 'border-purple-500 ring-2 ring-purple-500/30' : 'border-slate-200 dark:border-white/[0.08]' }} shadow-sm dark:shadow-xl hover:border-purple-500/40 transition-all">
+                    <span class="stat-card-title text-xs font-bold text-slate-600 dark:text-slate-300 block">Semua Permohonan</span>
+                    <span class="stat-card-count-all text-2xl font-extrabold text-slate-900 dark:text-white font-display mt-1 block">{{ $counts['all'] }}</span>
                 </a>
 
-                <a href="{{ route('admin.loans.index', ['status' => 'pending']) }}" class="p-4 sm:p-5 rounded-2xl bg-[#0e0e1a]/80 backdrop-blur-xl border {{ ($status == 'pending') ? 'border-amber-500 ring-2 ring-amber-500/30' : 'border-white/[0.08]' }} shadow-xl hover:border-amber-500/40 transition-all">
-                    <span class="text-xs font-semibold text-amber-400 flex items-center gap-1.5">
-                        <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                <a href="{{ route('admin.loans.index', ['status' => 'pending']) }}" class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-[#0e0e1a]/80 backdrop-blur-xl border {{ ($status == 'pending') ? 'border-amber-500 ring-2 ring-amber-500/30' : 'border-slate-200 dark:border-white/[0.08]' }} shadow-sm dark:shadow-xl hover:border-amber-500/40 transition-all">
+                    <span class="stat-card-title stat-card-title-amber text-xs font-bold text-amber-700 dark:text-amber-400 flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-amber-500 dark:bg-amber-400 animate-pulse"></span>
                         Menunggu Review
                     </span>
-                    <span class="text-2xl font-extrabold text-amber-400 font-display mt-1 block">{{ $counts['pending'] }}</span>
+                    <span class="text-2xl font-extrabold text-amber-600 dark:text-amber-400 font-display mt-1 block">{{ $counts['pending'] }}</span>
                 </a>
 
-                <a href="{{ route('admin.loans.index', ['status' => 'approved']) }}" class="p-4 sm:p-5 rounded-2xl bg-[#0e0e1a]/80 backdrop-blur-xl border {{ ($status == 'approved') ? 'border-emerald-500 ring-2 ring-emerald-500/30' : 'border-white/[0.08]' }} shadow-xl hover:border-emerald-500/40 transition-all">
-                    <span class="text-xs font-semibold text-emerald-400 block">Disetujui / Dipinjam</span>
-                    <span class="text-2xl font-extrabold text-emerald-400 font-display mt-1 block">{{ $counts['approved'] }}</span>
+                <a href="{{ route('admin.loans.index', ['status' => 'approved']) }}" class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-[#0e0e1a]/80 backdrop-blur-xl border {{ ($status == 'approved') ? 'border-emerald-500 ring-2 ring-emerald-500/30' : 'border-slate-200 dark:border-white/[0.08]' }} shadow-sm dark:shadow-xl hover:border-emerald-500/40 transition-all">
+                    <span class="stat-card-title stat-card-title-emerald text-xs font-bold text-emerald-700 dark:text-emerald-400 block">Disetujui / Dipinjam</span>
+                    <span class="text-2xl font-extrabold text-emerald-600 dark:text-emerald-400 font-display mt-1 block">{{ $counts['approved'] }}</span>
                 </a>
 
-                <a href="{{ route('admin.loans.index', ['status' => 'returned']) }}" class="p-4 sm:p-5 rounded-2xl bg-[#0e0e1a]/80 backdrop-blur-xl border {{ ($status == 'returned') ? 'border-blue-500 ring-2 ring-blue-500/30' : 'border-white/[0.08]' }} shadow-xl hover:border-blue-500/40 transition-all">
-                    <span class="text-xs font-semibold text-blue-400 block">Sudah Dikembalikan</span>
-                    <span class="text-2xl font-extrabold text-blue-400 font-display mt-1 block">{{ $counts['returned'] }}</span>
+                <a href="{{ route('admin.loans.index', ['status' => 'returned']) }}" class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-[#0e0e1a]/80 backdrop-blur-xl border {{ ($status == 'returned') ? 'border-blue-500 ring-2 ring-blue-500/30' : 'border-slate-200 dark:border-white/[0.08]' }} shadow-sm dark:shadow-xl hover:border-blue-500/40 transition-all">
+                    <span class="stat-card-title stat-card-title-blue text-xs font-bold text-blue-700 dark:text-blue-400 block">Sudah Dikembalikan</span>
+                    <span class="text-2xl font-extrabold text-blue-600 dark:text-blue-400 font-display mt-1 block">{{ $counts['returned'] }}</span>
                 </a>
 
-                <a href="{{ route('admin.loans.index', ['status' => 'rejected']) }}" class="p-4 sm:p-5 rounded-2xl bg-[#0e0e1a]/80 backdrop-blur-xl border {{ ($status == 'rejected') ? 'border-rose-500 ring-2 ring-rose-500/30' : 'border-white/[0.08]' }} shadow-xl hover:border-rose-500/40 transition-all">
-                    <span class="text-xs font-semibold text-rose-400 block">Permohonan Ditolak</span>
-                    <span class="text-2xl font-extrabold text-rose-400 font-display mt-1 block">{{ $counts['rejected'] }}</span>
+                <a href="{{ route('admin.loans.index', ['status' => 'rejected']) }}" class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-[#0e0e1a]/80 backdrop-blur-xl border {{ ($status == 'rejected') ? 'border-rose-500 ring-2 ring-rose-500/30' : 'border-slate-200 dark:border-white/[0.08]' }} shadow-sm dark:shadow-xl hover:border-rose-500/40 transition-all">
+                    <span class="stat-card-title stat-card-title-rose text-xs font-bold text-rose-700 dark:text-rose-400 block">Permohonan Ditolak</span>
+                    <span class="text-2xl font-extrabold text-rose-600 dark:text-rose-400 font-display mt-1 block">{{ $counts['rejected'] }}</span>
                 </a>
             </div>
 
             <!-- Filter & Search Toolbar -->
-            <div class="bg-[#0e0e1a]/80 backdrop-blur-xl rounded-2xl p-4 sm:p-5 border border-white/[0.08] shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="bg-white dark:bg-[#0e0e1a]/80 backdrop-blur-xl rounded-2xl p-4 sm:p-5 border border-slate-200 dark:border-white/[0.08] shadow-sm dark:shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div class="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto text-xs pb-1 sm:pb-0">
                     @foreach(['all' => 'Semua', 'pending' => 'Pending', 'approved' => 'Disetujui', 'returned' => 'Dikembalikan', 'rejected' => 'Ditolak'] as $key => $label)
-                        <a href="{{ route('admin.loans.index', ['status' => $key, 'search' => $search]) }}" class="px-3.5 py-2 rounded-xl font-semibold transition whitespace-nowrap {{ ($status == $key) ? 'bg-purple-600 text-white shadow-md shadow-purple-600/30' : 'text-slate-400 hover:text-white hover:bg-white/[0.05]' }}">
+                        <a href="{{ route('admin.loans.index', ['status' => $key, 'search' => $search]) }}" class="admin-filter-badge px-3.5 py-2 rounded-xl font-semibold transition whitespace-nowrap {{ ($status == $key) ? 'bg-purple-600 text-white shadow-md shadow-purple-600/30' : 'bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-slate-900 dark:bg-white/[0.05] dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/[0.1]' }}">
                             {{ $label }}
                         </a>
                     @endforeach
+
+                    <!-- Tombol Cetak Laporan PDF -->
+                    <button type="button" onclick="document.getElementById('cetakPdfModal').classList.remove('hidden')" class="px-3.5 py-2 rounded-xl font-bold transition whitespace-nowrap bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-md shadow-purple-600/30 flex items-center gap-1.5 cursor-pointer">
+                        <span>🖨️ Cetak Laporan</span>
+                    </button>
                 </div>
 
                 <form action="{{ route('admin.loans.index') }}" method="GET" class="w-full sm:w-auto flex items-center gap-2">
                     <input type="hidden" name="status" value="{{ $status }}">
-                    <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Cari nama/nickname/kode..." class="w-full sm:w-64 bg-[#131224] border border-white/10 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:ring-2 focus:ring-purple-500/50 focus:outline-none">
+                    <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Cari nama/nickname/kode..." class="w-full sm:w-64 bg-slate-50 dark:bg-[#131224] border border-slate-300 dark:border-white/10 rounded-xl px-3.5 py-2 text-xs text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:ring-2 focus:ring-purple-500/50 focus:outline-none">
                     <button type="submit" class="bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold px-4 py-2 rounded-xl transition shadow-md shadow-purple-600/30">
                         Cari
                     </button>
                     @if($search)
-                        <a href="{{ route('admin.loans.index', ['status' => $status]) }}" class="text-xs text-slate-400 hover:text-purple-300 underline">Reset</a>
+                        <a href="{{ route('admin.loans.index', ['status' => $status]) }}" class="text-xs text-slate-500 hover:text-purple-600 dark:text-slate-400 dark:hover:text-purple-300 underline">Reset</a>
                     @endif
                 </form>
             </div>
 
             <!-- Loans Table -->
-            <div class="bg-[#0e0e1a]/80 backdrop-blur-xl rounded-3xl border border-white/[0.08] shadow-2xl overflow-hidden">
+            <div class="bg-white dark:bg-[#0e0e1a]/80 backdrop-blur-xl rounded-3xl border border-slate-200 dark:border-white/[0.08] shadow-sm dark:shadow-2xl overflow-hidden">
                 @if($loans->isEmpty())
                     <div class="text-center py-16 px-4">
                         <svg class="w-12 h-12 text-gray-400 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -143,9 +148,14 @@
                         @foreach($loans as $loan)
                             <div class="pt-4 first:pt-0 space-y-3">
                                 <div class="flex items-start justify-between gap-2">
-                                    <div>
-                                        <span class="font-mono font-bold text-sm text-indigo-600 dark:text-indigo-400">#{{ $loan->loan_code }}</span>
-                                        <span class="text-[11px] text-gray-400 block">{{ $loan->created_at->format('d M Y, H:i') }}</span>
+                                    <div class="flex items-center gap-2.5">
+                                        <span class="w-7 h-7 rounded-lg bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 font-mono text-xs font-bold flex items-center justify-center shrink-0">
+                                            {{ ($loans->currentPage() - 1) * $loans->perPage() + $loop->iteration }}
+                                        </span>
+                                        <div>
+                                            <span class="font-mono font-bold text-sm text-indigo-600 dark:text-indigo-400">#{{ $loan->loan_code }}</span>
+                                            <span class="text-[11px] text-gray-400 block">{{ $loan->created_at->format('d M Y, H:i') }}</span>
+                                        </div>
                                     </div>
                                     <div>
                                         @if($loan->status == 'pending')
@@ -247,6 +257,7 @@
                         <table class="w-full text-left border-collapse text-xs">
                             <thead>
                                 <tr class="border-b border-gray-200 dark:border-gray-700 bg-gray-50/75 dark:bg-gray-900/50 text-gray-500 dark:text-gray-400 uppercase tracking-wider font-semibold">
+                                    <th class="py-3.5 px-4 text-center w-12">NO</th>
                                     <th class="py-3.5 px-5">Kode / Tanggal Masuk</th>
                                     <th class="py-3.5 px-5">Peminjam (Nickname & Kontak)</th>
                                     <th class="py-3.5 px-5">Barang & Qty</th>
@@ -258,6 +269,11 @@
                             <tbody class="divide-y divide-gray-100 dark:divide-gray-700/60">
                                 @foreach($loans as $loan)
                                     <tr class="hover:bg-gray-50/80 dark:hover:bg-gray-700/30 transition">
+                                        <!-- Nomor Urut -->
+                                        <td class="py-4 px-4 text-center font-bold text-slate-500 dark:text-slate-400">
+                                            {{ ($loans->currentPage() - 1) * $loans->perPage() + $loop->iteration }}
+                                        </td>
+
                                         <!-- Kode & Tanggal -->
                                         <td class="py-4 px-5">
                                             <span class="font-mono font-bold text-indigo-600 dark:text-indigo-400 block">#{{ $loan->loan_code }}</span>
@@ -426,6 +442,64 @@
 
         </div>
     </div>
+
+    <!-- Modal Cetak Laporan PDF -->
+    <div id="cetakPdfModal" onclick="if (event.target === this) this.classList.add('hidden')" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-[#131224] rounded-3xl max-w-md w-full p-6 shadow-2xl border border-purple-100 dark:border-white/10 text-left relative transform transition-all">
+            <div class="flex items-center justify-between pb-3 border-b border-purple-100 dark:border-white/10 mb-4">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-9 h-9 rounded-2xl bg-purple-100 dark:bg-purple-900/40 text-purple-600 dark:text-purple-300 flex items-center justify-center text-lg shadow-sm">
+                        🖨️
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-base text-slate-900 dark:text-white font-display">Cetak Laporan PDF</h3>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400">Pilih rentang tanggal transaksi permohonan</p>
+                    </div>
+                </div>
+                <button type="button" onclick="document.getElementById('cetakPdfModal').classList.add('hidden')" class="w-8 h-8 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-400 hover:text-slate-600 dark:hover:text-white flex items-center justify-center text-base font-bold transition">
+                    &times;
+                </button>
+            </div>
+            <form action="{{ route('admin.loans.cetak') }}" method="POST" target="_blank">
+                @csrf
+                <div class="space-y-4 text-xs">
+                    <div>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1.5">Tanggal Awal</label>
+                        <input type="date" name="tanggal_awal" value="{{ now()->startOfMonth()->format('Y-m-d') }}" required class="w-full bg-slate-50 dark:bg-[#0c0c16] border border-purple-200 dark:border-white/10 rounded-xl px-3.5 py-2.5 text-slate-900 dark:text-white focus:ring-2 focus:ring-purple-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1.5">Tanggal Akhir</label>
+                        <input type="date" name="tanggal_akhir" value="{{ now()->format('Y-m-d') }}" required class="w-full bg-slate-50 dark:bg-[#0c0c16] border border-purple-200 dark:border-white/10 rounded-xl px-3.5 py-2.5 text-slate-900 dark:text-white focus:ring-2 focus:ring-purple-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1.5">Filter Status (Opsional)</label>
+                        <select name="status" class="w-full bg-slate-50 dark:bg-[#0c0c16] border border-purple-200 dark:border-white/10 rounded-xl px-3.5 py-2.5 text-slate-900 dark:text-white focus:ring-2 focus:ring-purple-500 focus:outline-none">
+                            <option value="all">Semua Status Permohonan</option>
+                            <option value="pending">Menunggu Review (Pending)</option>
+                            <option value="approved">Disetujui / Dipinjam</option>
+                            <option value="returned">Sudah Dikembalikan</option>
+                            <option value="rejected">Ditolak</option>
+                        </select>
+                    </div>
+                    <div class="p-3 rounded-xl bg-purple-50 dark:bg-purple-950/30 border border-purple-200 dark:border-purple-800/40 text-[11px] text-purple-700 dark:text-purple-300 flex items-start gap-2">
+                        <svg class="w-4 h-4 text-purple-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span>Dokumen PDF akan otomatis di-generate dan diunduh ke perangkat Anda.</span>
+                    </div>
+                </div>
+                <div class="mt-6 flex items-center justify-end gap-2.5 pt-3 border-t border-purple-100 dark:border-white/10">
+                    <button type="button" onclick="document.getElementById('cetakPdfModal').classList.add('hidden')" class="px-4 py-2.5 rounded-xl border border-slate-300 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5 text-xs font-semibold transition">
+                        Batal
+                    </button>
+                    <button type="submit" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-bold shadow-lg shadow-purple-600/30 transition flex items-center gap-1.5 cursor-pointer">
+                        <span>Generate PDF &rarr;</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Modal Ubah Tanggal untuk Tiap Pinjaman -->
     @foreach($loans as $loan)
         <div id="editDateModal_{{ $loan->id }}" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">

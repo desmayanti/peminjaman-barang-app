@@ -331,41 +331,41 @@ body.light-mode .text-purple-200 {
 }
 
 /* 9. Preserve Primary Action Buttons, Brand Accents & Badges */
-html.light-mode button[class*="bg-purple"],
-html.light-mode button[class*="bg-indigo"],
-html.light-mode button[class*="bg-emerald"],
-html.light-mode button[class*="bg-rose"],
-html.light-mode button[class*="bg-gradient"],
-html.light-mode button[class*="from-purple"],
-html.light-mode a[class*="bg-purple"],
-html.light-mode a[class*="bg-indigo"],
-html.light-mode a[class*="bg-emerald"],
-html.light-mode a[class*="bg-rose"],
-html.light-mode a[class*="bg-gradient"],
-html.light-mode a[class*="from-purple"],
-body.light-mode button[class*="bg-purple"],
-body.light-mode button[class*="bg-indigo"],
-body.light-mode button[class*="bg-emerald"],
-body.light-mode button[class*="bg-rose"],
-body.light-mode button[class*="bg-gradient"],
-body.light-mode button[class*="from-purple"],
-body.light-mode a[class*="bg-purple"],
-body.light-mode a[class*="bg-indigo"],
-body.light-mode a[class*="bg-emerald"],
-body.light-mode a[class*="bg-rose"],
-body.light-mode a[class*="bg-gradient"],
-body.light-mode a[class*="from-purple"] {
+html.light-mode button[class*="bg-purple"]:not(.admin-btn-outline):not([class*="bg-white"]):not([class*="bg-purple-50"]):not([class*="bg-purple-100"]):not([class*="hover:bg-purple-50"]):not([class*="hover:bg-purple-100"]),
+html.light-mode button[class*="bg-indigo"]:not(.admin-btn-outline),
+html.light-mode button[class*="bg-emerald"]:not(.admin-btn-outline),
+html.light-mode button[class*="bg-rose"]:not(.admin-btn-outline),
+html.light-mode button[class*="bg-gradient"]:not(.admin-btn-outline),
+html.light-mode button[class*="from-purple"]:not(.admin-btn-outline),
+html.light-mode a[class*="bg-purple"]:not(nav a):not(.admin-nav-item):not(.admin-btn-outline):not(.admin-filter-badge):not([class*="bg-white"]):not([class*="bg-purple-50"]):not([class*="bg-purple-100"]):not([class*="hover:bg-purple-50"]):not([class*="hover:bg-purple-100"]),
+html.light-mode a[class*="bg-indigo"]:not(nav a):not(.admin-nav-item):not(.admin-btn-outline),
+html.light-mode a[class*="bg-emerald"]:not(nav a):not(.admin-nav-item):not(.admin-btn-outline),
+html.light-mode a[class*="bg-rose"]:not(nav a):not(.admin-nav-item):not(.admin-btn-outline),
+html.light-mode a[class*="bg-gradient"]:not(nav a):not(.admin-nav-item):not(.admin-btn-outline),
+html.light-mode a[class*="from-purple"]:not(nav a):not(.admin-nav-item):not(.admin-btn-outline),
+body.light-mode button[class*="bg-purple"]:not(.admin-btn-outline):not([class*="bg-white"]):not([class*="bg-purple-50"]):not([class*="bg-purple-100"]):not([class*="hover:bg-purple-50"]):not([class*="hover:bg-purple-100"]),
+body.light-mode button[class*="bg-indigo"]:not(.admin-btn-outline),
+body.light-mode button[class*="bg-emerald"]:not(.admin-btn-outline),
+body.light-mode button[class*="bg-rose"]:not(.admin-btn-outline),
+body.light-mode button[class*="bg-gradient"]:not(.admin-btn-outline),
+body.light-mode button[class*="from-purple"]:not(.admin-btn-outline),
+body.light-mode a[class*="bg-purple"]:not(nav a):not(.admin-nav-item):not(.admin-btn-outline):not(.admin-filter-badge):not([class*="bg-white"]):not([class*="bg-purple-50"]):not([class*="bg-purple-100"]):not([class*="hover:bg-purple-50"]):not([class*="hover:bg-purple-100"]),
+body.light-mode a[class*="bg-indigo"]:not(nav a):not(.admin-nav-item):not(.admin-btn-outline),
+body.light-mode a[class*="bg-emerald"]:not(nav a):not(.admin-nav-item):not(.admin-btn-outline),
+body.light-mode a[class*="bg-rose"]:not(nav a):not(.admin-nav-item):not(.admin-btn-outline),
+body.light-mode a[class*="bg-gradient"]:not(nav a):not(.admin-nav-item):not(.admin-btn-outline),
+body.light-mode a[class*="from-purple"]:not(nav a):not(.admin-nav-item):not(.admin-btn-outline) {
     color: #FFFFFF !important;
 }
 
-html.light-mode button[class*="bg-purple"] *,
-html.light-mode a[class*="bg-purple"] *,
-html.light-mode button[class*="bg-gradient"] *,
-html.light-mode a[class*="bg-gradient"] *,
-body.light-mode button[class*="bg-purple"] *,
-body.light-mode a[class*="bg-purple"] *,
-body.light-mode button[class*="bg-gradient"] *,
-body.light-mode a[class*="bg-gradient"] * {
+html.light-mode button[class*="bg-purple"]:not(.admin-btn-outline):not([class*="bg-white"]):not([class*="bg-purple-50"]):not([class*="bg-purple-100"]):not([class*="hover:bg-purple-50"]):not([class*="hover:bg-purple-100"]) *,
+html.light-mode a[class*="bg-purple"]:not(nav a):not(.admin-nav-item):not(.admin-btn-outline):not(.admin-filter-badge):not([class*="bg-white"]):not([class*="bg-purple-50"]):not([class*="bg-purple-100"]):not([class*="hover:bg-purple-50"]):not([class*="hover:bg-purple-100"]) *,
+html.light-mode button[class*="bg-gradient"]:not(.admin-btn-outline) *,
+html.light-mode a[class*="bg-gradient"]:not(nav a):not(.admin-nav-item):not(.admin-btn-outline) *,
+body.light-mode button[class*="bg-purple"]:not(.admin-btn-outline):not([class*="bg-white"]):not([class*="bg-purple-50"]):not([class*="bg-purple-100"]):not([class*="hover:bg-purple-50"]):not([class*="hover:bg-purple-100"]) *,
+body.light-mode a[class*="bg-purple"]:not(nav a):not(.admin-nav-item):not(.admin-btn-outline):not(.admin-filter-badge):not([class*="bg-white"]):not([class*="bg-purple-50"]):not([class*="bg-purple-100"]):not([class*="hover:bg-purple-50"]):not([class*="hover:bg-purple-100"]) *,
+body.light-mode button[class*="bg-gradient"]:not(.admin-btn-outline) *,
+body.light-mode a[class*="bg-gradient"]:not(nav a):not(.admin-nav-item):not(.admin-btn-outline) * {
     color: #FFFFFF !important;
 }
 
@@ -613,22 +613,442 @@ body.light-mode [class*="from-purple-600"],
 }
 
 /* Hero Floating Showcase Card Preservation in Light Mode */
+/* Hero Floating Showcase Card Styling in Light Mode */
 html.light-mode .hero-showcase-card-1,
-body.light-mode .hero-showcase-card-1 {
+body.light-mode .hero-showcase-card-1,
+.light-mode .hero-showcase-card-1 {
     background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 50%, #4338CA 100%) !important;
     color: #FFFFFF !important;
 }
-html.light-mode .hero-showcase-card-1 *,
-body.light-mode .hero-showcase-card-1 * {
-    color: inherit;
-}
-html.light-mode .hero-showcase-card-2,
-body.light-mode .hero-showcase-card-2 {
-    background-color: #161329 !important;
+
+html.light-mode .hero-showcase-card-1 h3,
+body.light-mode .hero-showcase-card-1 h3,
+.light-mode .hero-showcase-card-1 h3,
+.hero-card-title,
+html.light-mode .hero-card-title,
+body.light-mode .hero-card-title {
     color: #FFFFFF !important;
-    border-color: rgba(168, 85, 247, 0.45) !important;
 }
-html.light-mode .hero-showcase-card-2 *,
-body.light-mode .hero-showcase-card-2 * {
-    color: inherit;
+
+html.light-mode .hero-showcase-card-1 p,
+body.light-mode .hero-showcase-card-1 p,
+.light-mode .hero-showcase-card-1 p {
+    color: #F3E8FF !important;
+}
+
+html.light-mode .hero-showcase-card-1 span,
+body.light-mode .hero-showcase-card-1 span,
+.light-mode .hero-showcase-card-1 span {
+    color: #FFFFFF !important;
+}
+
+html.light-mode .hero-showcase-card-1 .text-purple-200,
+body.light-mode .hero-showcase-card-1 .text-purple-200,
+.light-mode .hero-showcase-card-1 .text-purple-200 {
+    color: #E9D5FF !important;
+}
+
+html.light-mode .hero-showcase-card-1 .text-emerald-300,
+body.light-mode .hero-showcase-card-1 .text-emerald-300,
+.light-mode .hero-showcase-card-1 .text-emerald-300 {
+    color: #6EE7B7 !important;
+}
+
+html.light-mode .hero-showcase-card-1 svg,
+body.light-mode .hero-showcase-card-1 svg,
+.light-mode .hero-showcase-card-1 svg {
+    color: #F3E8FF !important;
+}
+
+/* Hero Showcase Card 2 - Terang Elegan di Light Mode */
+/* Hero Showcase Card 2 - Putih Solid & Rapi di Light Mode */
+html.light-mode .hero-showcase-card-2,
+body.light-mode .hero-showcase-card-2,
+.light-mode .hero-showcase-card-2 {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    background-color: #FFFFFF !important;
+    background: #FFFFFF !important;
+    color: #1E293B !important;
+    border-color: rgba(233, 213, 255, 0.8) !important;
+    box-shadow: 0 20px 25px -5px rgba(147, 51, 234, 0.1), 0 8px 10px -6px rgba(147, 51, 234, 0.08) !important;
+    border-color: #E9D5FF !important;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05) !important;
+}
+
+html.light-mode .hero-showcase-card-2 h4,
+body.light-mode .hero-showcase-card-2 h4,
+.light-mode .hero-showcase-card-2 h4 {
+    color: #0F172A !important;
+}
+
+html.light-mode .hero-showcase-card-2 .hero-showcase-main-text,
+body.light-mode .hero-showcase-card-2 .hero-showcase-main-text,
+.light-mode .hero-showcase-card-2 .hero-showcase-main-text {
+    color: #1E293B !important;
+    font-weight: 600 !important;
+}
+
+html.light-mode .hero-showcase-card-2 .hero-icon-box-1,
+body.light-mode .hero-showcase-card-2 .hero-icon-box-1,
+.light-mode .hero-showcase-card-2 .hero-icon-box-1,
+html.light-mode .hero-showcase-card-2 .hero-icon-box-2,
+body.light-mode .hero-showcase-card-2 .hero-icon-box-2,
+.light-mode .hero-showcase-card-2 .hero-icon-box-2 {
+    background-color: #F3E8FF !important;
+    color: #9333EA !important;
+    border-color: #E9D5FF !important;
+}
+
+html.light-mode .hero-showcase-card-2 .hero-icon-box-1 svg,
+body.light-mode .hero-showcase-card-2 .hero-icon-box-1 svg,
+.light-mode .hero-showcase-card-2 .hero-icon-box-1 svg,
+html.light-mode .hero-showcase-card-2 .hero-icon-box-2 svg,
+body.light-mode .hero-showcase-card-2 .hero-icon-box-2 svg,
+.light-mode .hero-showcase-card-2 .hero-icon-box-2 svg {
+    color: #9333EA !important;
+}
+
+html.light-mode .hero-showcase-card-2 .hero-showcase-free,
+body.light-mode .hero-showcase-card-2 .hero-showcase-free,
+.light-mode .hero-showcase-card-2 .hero-showcase-free {
+    color: #64748B !important;
+}
+
+html.light-mode .hero-showcase-card-2 a.hero-showcase-link,
+body.light-mode .hero-showcase-card-2 a.hero-showcase-link,
+.light-mode .hero-showcase-card-2 a.hero-showcase-link {
+    color: #9333EA !important;
+    font-weight: 600 !important;
+}
+
+html.light-mode .hero-showcase-card-2 a.hero-showcase-link:hover,
+body.light-mode .hero-showcase-card-2 a.hero-showcase-link:hover,
+.light-mode .hero-showcase-card-2 a.hero-showcase-link:hover {
+    color: #7E22CE !important;
+}
+
+html.light-mode .hero-showcase-card-2 .hero-wa-badge,
+body.light-mode .hero-showcase-card-2 .hero-wa-badge,
+.light-mode .hero-showcase-card-2 .hero-wa-badge {
+    background-color: #ECFDF5 !important;
+    color: #047857 !important;
+    border-color: #A7F3D0 !important;
+}
+
+html.light-mode .hero-showcase-card-2 .hero-card-divider,
+body.light-mode .hero-showcase-card-2 .hero-card-divider,
+.light-mode .hero-showcase-card-2 .hero-card-divider {
+    border-color: rgba(233, 213, 255, 0.6) !important;
+}
+
+/* Floating Pill Badge di Sudut Kanan Bawah */
+html.light-mode .hero-status-pill,
+body.light-mode .hero-status-pill,
+.light-mode .hero-status-pill {
+    background-color: #FFFFFF !important;
+    background: #FFFFFF !important;
+    border-color: #A7F3D0 !important;
+    color: #047857 !important;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1) !important;
+}
+
+html.light-mode .hero-status-pill-text,
+body.light-mode .hero-status-pill-text,
+.light-mode .hero-status-pill-text {
+    color: #047857 !important;
+}
+
+/* ==========================================================================
+   12. Admin Navigation Contrast in Light Mode
+   Pastikan semua teks navigasi (Dashboard, Permohonan Pinjam, Katalog Aset, dll.)
+   berubah menjadi warna gelap tegas (#1E293B / slate-800) saat Light Mode aktif.
+   ========================================================================== */
+html.light-mode .admin-nav-item,
+body.light-mode .admin-nav-item,
+.light-mode .admin-nav-item,
+html.light-mode nav a.admin-nav-item,
+body.light-mode nav a.admin-nav-item,
+.light-mode nav a.admin-nav-item,
+html.light-mode nav div.sm\:flex a,
+body.light-mode nav div.sm\:flex a,
+.light-mode nav div.sm\:flex a,
+html.light-mode nav div.space-y-1\.5 a,
+body.light-mode nav div.space-y-1\.5 a,
+.light-mode nav div.space-y-1\.5 a {
+    color: #1E293B !important;
+}
+
+html.light-mode .admin-nav-item span,
+body.light-mode .admin-nav-item span,
+.light-mode .admin-nav-item span,
+html.light-mode nav a.admin-nav-item span,
+body.light-mode nav a.admin-nav-item span,
+.light-mode nav a.admin-nav-item span,
+html.light-mode nav div.sm\:flex a span,
+body.light-mode nav div.sm\:flex a span,
+.light-mode nav div.sm\:flex a span,
+html.light-mode nav div.space-y-1\.5 a span,
+body.light-mode nav div.space-y-1\.5 a span,
+.light-mode nav div.space-y-1\.5 a span {
+    color: #1E293B !important;
+}
+
+/* Active Nav Tab in Light Mode */
+html.light-mode .admin-nav-item.active-tab,
+body.light-mode .admin-nav-item.active-tab,
+.light-mode .admin-nav-item.active-tab,
+html.light-mode nav a.active-tab,
+body.light-mode nav a.active-tab,
+.light-mode nav a.active-tab {
+    background-color: #EDE9FE !important; /* purple-100 lembut */
+    border-color: #C4B5FD !important; /* purple-300 */
+    color: #1E293B !important;
+    font-weight: 700 !important;
+}
+
+html.light-mode .admin-nav-item.active-tab span,
+body.light-mode .admin-nav-item.active-tab span,
+.light-mode .admin-nav-item.active-tab span,
+html.light-mode nav a.active-tab span,
+body.light-mode nav a.active-tab span,
+.light-mode nav a.active-tab span {
+    color: #1E293B !important;
+    font-weight: 700 !important;
+}
+
+/* Inactive Nav Tab Hover in Light Mode */
+html.light-mode .admin-nav-item:hover,
+body.light-mode .admin-nav-item:hover,
+.light-mode .admin-nav-item:hover,
+html.light-mode nav a.admin-nav-item:hover,
+body.light-mode nav a.admin-nav-item:hover,
+.light-mode nav a.admin-nav-item:hover {
+    background-color: #F3E8FF !important;
+    color: #0F172A !important;
+}
+
+html.light-mode .admin-nav-item:hover span,
+body.light-mode .admin-nav-item:hover span,
+.light-mode .admin-nav-item:hover span {
+    color: #0F172A !important;
+}
+
+/* Navigation SVGs in Light Mode */
+html.light-mode .admin-nav-item svg,
+body.light-mode .admin-nav-item svg,
+.light-mode .admin-nav-item svg {
+    color: #7C3AED !important;
+    stroke: #7C3AED !important;
+}
+
+/* Pending Counter Badge */
+html.light-mode .admin-nav-item .pending-badge,
+body.light-mode .admin-nav-item .pending-badge,
+.light-mode .admin-nav-item .pending-badge,
+html.light-mode nav .pending-badge,
+body.light-mode nav .pending-badge,
+.light-mode nav .pending-badge {
+    background-color: #F59E0B !important;
+    color: #0F172A !important;
+}
+
+/* User dropdown profile button in Light Mode */
+html.light-mode .admin-user-btn,
+body.light-mode .admin-user-btn,
+.light-mode .admin-user-btn,
+html.light-mode .admin-user-btn div,
+body.light-mode .admin-user-btn div,
+.light-mode .admin-user-btn div {
+    color: #1E293B !important;
+}
+
+/* ==========================================================================
+   13. Kotak Peringatan Stok Habis (Restock Needed) in Light Mode
+   Daftar kode & nama barang menjadi merah marun gelap pekat (#7F1D1D / text-red-800)
+   ========================================================================== */
+html.light-mode .restock-alert-box,
+body.light-mode .restock-alert-box,
+.light-mode .restock-alert-box {
+    background-color: #FFF1F2 !important; /* rose-50 pekat bersih */
+    border-color: #FECDD3 !important; /* rose-200 */
+}
+
+html.light-mode .restock-alert-box .font-bold,
+body.light-mode .restock-alert-box .font-bold,
+.light-mode .restock-alert-box .font-bold,
+html.light-mode .restock-alert-box h3,
+body.light-mode .restock-alert-box h3,
+.light-mode .restock-alert-box h3 {
+    color: #7F1D1D !important; /* Merah marun gelap pekat */
+}
+
+html.light-mode .restock-alert-box p,
+body.light-mode .restock-alert-box p,
+.light-mode .restock-alert-box p,
+html.light-mode .restock-alert-box li,
+body.light-mode .restock-alert-box li,
+.light-mode .restock-alert-box li,
+html.light-mode .restock-alert-box span,
+body.light-mode .restock-alert-box span,
+.light-mode .restock-alert-box span {
+    color: #7F1D1D !important; /* Merah marun pekat */
+}
+
+html.light-mode .restock-item-badge,
+body.light-mode .restock-item-badge,
+.light-mode .restock-item-badge,
+html.light-mode .restock-alert-box [class*="bg-rose-100"],
+body.light-mode .restock-alert-box [class*="bg-rose-100"],
+.light-mode .restock-alert-box [class*="bg-rose-100"] {
+    color: #7F1D1D !important; /* Merah marun pekat (#7F1D1D) */
+    background-color: #FEE2E2 !important; /* red-100 */
+    border-color: #FCA5A5 !important; /* red-300 */
+    font-weight: 700 !important;
+}
+
+/* ==========================================================================
+   14. Badge / Tombol Outline ('Semua Permohonan', 'Lihat Katalog Publik', dll.) in Light Mode
+   Pastikan teks di dalam elemen badge atau tombol sekunder yang memiliki background
+   terang/putih diubah menjadi warna gelap tegas (#1E293B / text-slate-800).
+   ========================================================================== */
+html.light-mode .admin-btn-outline,
+body.light-mode .admin-btn-outline,
+.light-mode .admin-btn-outline,
+html.light-mode a.admin-btn-outline,
+body.light-mode a.admin-btn-outline,
+.light-mode a.admin-btn-outline,
+html.light-mode button.admin-btn-outline,
+body.light-mode button.admin-btn-outline,
+.light-mode button.admin-btn-outline {
+    background-color: #FFFFFF !important;
+    background: #FFFFFF !important;
+    color: #1E293B !important;
+    border: 1.5px solid #DDD6FE !important; /* purple-200 */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+}
+
+html.light-mode .admin-btn-outline *,
+body.light-mode .admin-btn-outline *,
+.light-mode .admin-btn-outline *,
+html.light-mode a.admin-btn-outline *,
+body.light-mode a.admin-btn-outline *,
+.light-mode a.admin-btn-outline * {
+    color: #1E293B !important;
+}
+
+html.light-mode .admin-btn-outline svg,
+body.light-mode .admin-btn-outline svg,
+.light-mode .admin-btn-outline svg,
+html.light-mode a.admin-btn-outline svg,
+body.light-mode a.admin-btn-outline svg,
+.light-mode a.admin-btn-outline svg {
+    color: #7C3AED !important;
+    stroke: #7C3AED !important;
+}
+
+html.light-mode .admin-btn-outline:hover,
+body.light-mode .admin-btn-outline:hover,
+.light-mode .admin-btn-outline:hover,
+html.light-mode a.admin-btn-outline:hover,
+body.light-mode a.admin-btn-outline:hover,
+.light-mode a.admin-btn-outline:hover {
+    background-color: #F3E8FF !important; /* purple-100 */
+    background: #F3E8FF !important;
+    border-color: #A855F7 !important;
+    color: #0F172A !important;
+}
+
+html.light-mode .admin-btn-outline:hover *,
+body.light-mode .admin-btn-outline:hover *,
+.light-mode .admin-btn-outline:hover * {
+    color: #0F172A !important;
+}
+
+/* Badge & Tab Filter Toolbar di Admin */
+html.light-mode .admin-filter-badge:not(.bg-purple-600),
+body.light-mode .admin-filter-badge:not(.bg-purple-600),
+.light-mode .admin-filter-badge:not(.bg-purple-600) {
+    color: #334155 !important; /* slate-700 */
+    background-color: #F1F5F9 !important; /* slate-100 */
+    background: #F1F5F9 !important;
+    border: 1px solid #E2E8F0 !important; /* slate-200 */
+    font-weight: 600 !important;
+}
+
+html.light-mode .admin-filter-badge:not(.bg-purple-600) *,
+body.light-mode .admin-filter-badge:not(.bg-purple-600) *,
+.light-mode .admin-filter-badge:not(.bg-purple-600) * {
+    color: #334155 !important;
+}
+
+html.light-mode .admin-filter-badge:not(.bg-purple-600):hover,
+body.light-mode .admin-filter-badge:not(.bg-purple-600):hover,
+.light-mode .admin-filter-badge:not(.bg-purple-600):hover {
+    background-color: #E2E8F0 !important; /* slate-200 */
+    background: #E2E8F0 !important;
+    color: #0F172A !important; /* slate-900 */
+    border-color: #CBD5E1 !important;
+}
+
+/* Link aksi sekunder di Admin */
+html.light-mode .admin-link-action,
+body.light-mode .admin-link-action,
+.light-mode .admin-link-action {
+    color: #6D28D9 !important;
+    font-weight: 700 !important;
+}
+
+html.light-mode .admin-link-action:hover,
+body.light-mode .admin-link-action:hover,
+.light-mode .admin-link-action:hover {
+    color: #4C1D95 !important;
+}
+
+/* ==========================================================================
+   15. Kotak Kartu Statistik Utama ('Semua Permohonan 23', dll.) in Light & Dark Mode
+   Saat Light Mode aktif, teks judul kartu menggunakan warna gelap tegas (slate-600),
+   dan angka count menggunakan teks slate-900 yang sangat kontras.
+   ========================================================================== */
+html.light-mode .stat-card-title,
+body.light-mode .stat-card-title,
+.light-mode .stat-card-title,
+html.light-mode [class*="stat-card-title"]:not([class*="amber"]):not([class*="emerald"]):not([class*="blue"]):not([class*="rose"]) {
+    color: #475569 !important; /* slate-600 */
+    font-weight: 700 !important;
+}
+
+html.light-mode .stat-card-count-all,
+body.light-mode .stat-card-count-all,
+.light-mode .stat-card-count-all {
+    color: #0F172A !important; /* slate-900 */
+    font-weight: 800 !important;
+}
+
+html.light-mode .stat-card-title-amber,
+body.light-mode .stat-card-title-amber,
+.light-mode .stat-card-title-amber {
+    color: #B45309 !important; /* amber-700 */
+    font-weight: 700 !important;
+}
+
+html.light-mode .stat-card-title-emerald,
+body.light-mode .stat-card-title-emerald,
+.light-mode .stat-card-title-emerald {
+    color: #047857 !important; /* emerald-700 */
+    font-weight: 700 !important;
+}
+
+html.light-mode .stat-card-title-blue,
+body.light-mode .stat-card-title-blue,
+.light-mode .stat-card-title-blue {
+    color: #1D4ED8 !important; /* blue-700 */
+    font-weight: 700 !important;
+}
+
+html.light-mode .stat-card-title-rose,
+body.light-mode .stat-card-title-rose,
+.light-mode .stat-card-title-rose {
+    color: #BE123C !important; /* rose-700 */
+    font-weight: 700 !important;
 }

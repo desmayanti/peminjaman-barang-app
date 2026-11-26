@@ -2,12 +2,8 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
             <div class="flex items-center space-x-3">
-                <a href="{{ route('home') }}" class="flex items-center space-x-3 group">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-600 to-indigo-500 flex items-center justify-center text-white font-bold shadow-lg shadow-purple-500/30 group-hover:scale-105 transition duration-200">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                        </svg>
-                    </div>
+                <a href="javascript:void(0)" onclick="secretAdminLogin()" class="flex items-center space-x-3 group cursor-pointer select-none">
+                    <img src="{{ asset('images/logo-pb.webp') }}" alt="Logo PB" class="h-10 w-10 rounded-xl object-cover shadow-md shadow-purple-500/30 group-hover:scale-105 transition duration-200">
                     <div>
                         <span class="text-xl font-bold bg-gradient-to-r from-purple-800 via-purple-600 to-indigo-600 dark:from-white dark:via-indigo-200 dark:to-indigo-400 bg-clip-text text-transparent">PinjamBarang</span>
                         <span class="text-xs block text-slate-500 dark:text-slate-400 font-normal">Asset & Equipment Hub</span>
@@ -38,12 +34,30 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                         </svg>
                     </a>
-                @else
-                    <a href="{{ route('login') }}" class="text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-purple-700 dark:hover:text-white border border-purple-200 dark:border-slate-700 hover:border-purple-400 dark:hover:border-slate-500 bg-purple-50/60 dark:bg-transparent px-3.5 py-1.5 rounded-xl transition">
-                        Login Admin
-                    </a>
                 @endauth
             </div>
         </div>
     </div>
 </header>
+
+<script>
+    let clickCount = 0;
+    let clickTimer;
+
+    function secretAdminLogin() {
+        clickCount++;
+        clearTimeout(clickTimer);
+        
+        // Reset hitungan jika tidak diklik lagi dalam 2 detik
+        clickTimer = setTimeout(() => {
+            clickCount = 0;
+        }, 2000);
+
+        // Jika diklik 3 kali berturut-turut, arahkan ke halaman login
+        // Jika diklik 3 kali berturut-turut, arahkan ke pintu rahasia portal admin (auto-reset sesi & paksa form login)
+        if (clickCount === 3) {
+            window.location.href = "{{ route('login') }}"; 
+            window.location.href = "{{ route('admin.portal') }}"; 
+        }
+    }
+</script>

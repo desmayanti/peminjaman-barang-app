@@ -33,11 +33,11 @@
                     </svg>
                     <span>Tambah Aset Baru</span>
                 </a>
-                <a href="{{ route('admin.loans.index') }}" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs font-semibold bg-white dark:bg-white/[0.05] hover:bg-purple-50 dark:hover:bg-white/[0.1] text-slate-700 dark:text-slate-200 hover:text-purple-700 dark:hover:text-white border border-purple-200 dark:border-white/10 shadow-sm transition">
+                <a href="{{ route('admin.loans.index') }}" class="admin-btn-outline inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs font-semibold bg-white dark:bg-white/[0.05] hover:bg-purple-50 dark:hover:bg-white/[0.1] text-slate-800 dark:text-slate-200 hover:text-purple-700 dark:hover:text-white border border-purple-200 dark:border-white/10 shadow-sm transition">
                     <svg class="w-4 h-4 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                     </svg>
-                    <span>Semua Permohonan</span>
+                    <span class="font-bold text-slate-800 dark:text-slate-200">Semua Permohonan</span>
                 </a>
             </div>
         </div>
@@ -75,11 +75,11 @@
                                 <span>Verifikasi {{ $pendingLoans }} Pengajuan &rarr;</span>
                             </a>
                         @endif
-                        <a href="{{ route('home') }}" target="_blank" class="px-4 py-3 rounded-2xl bg-white dark:bg-white/[0.06] hover:bg-purple-50 dark:hover:bg-white/[0.12] text-slate-700 dark:text-slate-200 text-xs font-semibold border border-purple-200 dark:border-white/10 transition-colors flex items-center gap-1.5 shadow-sm">
+                        <a href="{{ route('home') }}" target="_blank" class="admin-btn-outline px-4 py-3 rounded-2xl bg-white dark:bg-white/[0.06] hover:bg-purple-50 dark:hover:bg-white/[0.12] text-slate-800 dark:text-slate-200 text-xs font-semibold border border-purple-200 dark:border-white/10 transition-colors flex items-center gap-1.5 shadow-sm">
                             <svg class="w-4 h-4 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                             </svg>
-                            <span>Lihat Katalog Publik</span>
+                            <span class="font-bold text-slate-800 dark:text-slate-200">Lihat Katalog Publik</span>
                         </a>
                     </div>
                 </div>
@@ -87,7 +87,7 @@
 
             <!-- Restock Alert (If Out of Stock) -->
             @if($outOfStockItems->count() > 0)
-                <div class="p-5 rounded-2xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-800/40 text-xs text-rose-700 dark:text-rose-300 flex items-start justify-between gap-4 shadow-sm">
+                <div class="restock-alert-box p-5 rounded-2xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-800/40 text-xs text-rose-700 dark:text-rose-300 flex items-start justify-between gap-4 shadow-sm">
                     <div class="flex items-start gap-3">
                         <div class="w-8 h-8 rounded-xl bg-rose-100 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400 flex items-center justify-center shrink-0 mt-0.5">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -99,7 +99,7 @@
                             <span class="text-slate-600 dark:text-slate-400 block mt-0.5">Barang berikut sedang kosong di katalog:</span>
                             <div class="flex flex-wrap gap-1.5 mt-2">
                                 @foreach($outOfStockItems as $oos)
-                                    <span class="px-2 py-0.5 rounded-lg bg-rose-100 dark:bg-rose-500/20 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-500/30 font-mono font-semibold text-[10px]">
+                                    <span class="restock-item-badge px-2 py-0.5 rounded-lg bg-rose-100 dark:bg-rose-500/20 text-red-800 dark:text-rose-300 border border-rose-200 dark:border-rose-500/30 font-mono font-bold text-[10px]">
                                         {{ $oos->code }} &bull; {{ $oos->name }}
                                     </span>
                                 @endforeach
@@ -211,7 +211,7 @@
                         </h3>
                         <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Daftar peminjam dan status tiket pengajuan terkini.</p>
                     </div>
-                    <a href="{{ route('admin.loans.index') }}" class="inline-flex items-center gap-1 text-xs font-bold text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 transition-colors">
+                    <a href="{{ route('admin.loans.index') }}" class="admin-link-action inline-flex items-center gap-1 text-xs font-bold text-purple-700 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-300 transition-colors">
                         <span>Lihat Semua Permohonan</span>
                         <span>&rarr;</span>
                     </a>
@@ -316,7 +316,7 @@
 
                                         <!-- Aksi -->
                                         <td class="py-3.5 px-3 text-right">
-                                            <a href="{{ route('admin.loans.index') }}" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-purple-50 dark:bg-white/[0.04] hover:bg-purple-100 dark:hover:bg-purple-600/20 text-purple-700 dark:text-slate-300 hover:text-purple-900 dark:hover:text-purple-300 border border-purple-200 dark:border-white/10 hover:border-purple-300 dark:hover:border-purple-500/40 transition-all font-semibold text-[11px]">
+                                            <a href="{{ route('admin.loans.index') }}" class="admin-btn-outline inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-purple-50 dark:bg-white/[0.04] hover:bg-purple-100 dark:hover:bg-purple-600/20 text-purple-700 dark:text-slate-300 hover:text-purple-900 dark:hover:text-purple-300 border border-purple-200 dark:border-white/10 hover:border-purple-300 dark:hover:border-purple-500/40 transition-all font-semibold text-[11px]">
                                                 <span>Tinjau</span>
                                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />

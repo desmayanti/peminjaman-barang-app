@@ -32,16 +32,31 @@ Route::get('/katalog-inventaris', [\App\Http\Controllers\InventoryController::cl
 
 /*
 |--------------------------------------------------------------------------
+| Secret Admin Entrance (Pintu Rahasia Portal Admin)
+|--------------------------------------------------------------------------
+*/
+Route::get('/akses-portal-admin', function (\Illuminate\Http\Request $request) {
+    if (\Illuminate\Support\Facades\Auth::check()) {
+        \Illuminate\Support\Facades\Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+    }
+    return redirect()->route('login');
+})->name('admin.portal');
+
+/*
+|--------------------------------------------------------------------------
 | Admin & Authenticated Routes
 |--------------------------------------------------------------------------
 */
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
 
-Route::middleware('auth')->group(function () {
     // Admin Loans Management
     Route::get('/admin/loans', [AdminLoanController::class, 'index'])->name('admin.loans.index');
+    Route::match(['get', 'post'], '/admin/loans/cetak-pdf', [AdminLoanController::class, 'cetakPdf'])->name('admin.loans.cetak');
     Route::patch('/admin/loans/{id}/status', [AdminLoanController::class, 'updateStatus'])->name('admin.loans.update');
     Route::post('/admin/loans/{loan}/dates', [AdminLoanController::class, 'updateDates'])->name('admin.loans.dates');
 

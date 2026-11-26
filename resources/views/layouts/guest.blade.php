@@ -10,6 +10,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'PinjamBarang') }}</title>
+    <link rel="icon" type="image/webp" href="{{ asset('images/logo-pb.webp') }}">
 
     <!-- Smart Theme Override & Anti-FOUC Engine -->
     <x-smart-theme-override />
@@ -59,13 +60,7 @@
     <div class="min-h-screen flex flex-col sm:justify-center items-center pt-8 sm:pt-0 px-4">
         <div class="mb-6">
             <a href="/" class="flex flex-col items-center gap-2 group">
-                <div
-                    class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-500 flex items-center justify-center text-white shadow-lg shadow-purple-500/30 group-hover:scale-105 transition-transform">
-                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                    </svg>
-                </div>
+                <img src="{{ asset('images/logo-pb.webp') }}" alt="Logo PB" class="h-12 w-12 rounded-2xl object-cover shadow-lg shadow-purple-500/30 group-hover:scale-105 transition-transform">
                 <span
                     class="text-xl font-extrabold tracking-tight text-slate-900 dark:text-white font-display">Pinjam<span
                         class="text-purple-600 dark:text-purple-400">Barang.</span></span>

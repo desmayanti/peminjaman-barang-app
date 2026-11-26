@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Katalog &amp; Inventaris Sarpras - PinjamBarang</title>
+    <link rel="icon" type="image/webp" href="{{ asset('images/logo-pb.webp') }}">
 
     <!-- Smart Theme Override & Anti-FOUC Engine -->
     <x-smart-theme-override />
@@ -52,11 +53,7 @@
     <nav class="fixed top-0 left-0 w-full z-50 bg-white/95 dark:bg-[#030305]/95 border-b border-purple-100 dark:border-white/[0.08] px-4 sm:px-8 py-3.5 flex items-center justify-between transition-colors duration-300 shadow-sm shadow-purple-100/50 dark:shadow-none">
         <!-- Logo -->
         <a href="{{ url('/') }}" class="flex items-center gap-3 group">
-            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-purple-600 to-indigo-500 flex items-center justify-center text-white shadow-[0_0_15px_rgba(147,51,234,0.4)] group-hover:scale-105 transition-transform">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                </svg>
-            </div>
+            <img src="{{ asset('images/logo-pb.webp') }}" alt="Logo PB" class="h-9 w-9 rounded-xl object-cover shadow-sm group-hover:scale-105 transition-transform">
             <span class="text-slate-900 dark:text-white font-extrabold text-lg tracking-tight font-display">Pinjam<span class="text-purple-600 dark:text-purple-400">Barang.</span></span>
         </a>
 

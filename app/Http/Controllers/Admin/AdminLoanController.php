@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Item;
 use App\Models\Loan;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class AdminLoanController extends Controller
@@ -95,5 +96,54 @@ class AdminLoanController extends Controller
         ]);
 
         return back()->with('success', "Tanggal peminjaman #{$loan->loan_code} berhasil diperbarui.");
+    }
+
+    public function cetakPdf(Request $request)
+    {
+        $startDateInput = $request->input('tanggal_awal', $request->input('start_date'));
+        $endDateInput = $request->input('tanggal_akhir', $request->input('end_date'));
+        $status = $request->input('status', 'all');
+
+        $request->validate([
+            'tanggal_awal' => 'nullable|date',
+            'tanggal_akhir' => 'nullable|date',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date',
+        ]);
+
+        // Default rentang waktu: awal bulan ini s/d hari ini jika tanggal tidak diisi
+        $awal = $startDateInput ? \Carbon\Carbon::parse($startDateInput)->startOfDay() : now()->startOfMonth()->startOfDay();
+        $akhir = $endDateInput ? \Carbon\Carbon::parse($endDateInput)->endOfDay() : now()->endOfDay();
+
+        // Pastikan urutan tanggal valid jika tanggal_akhir lebih kecil dari tanggal_awal
+        if ($awal->gt($akhir)) {
+            $temp = $awal;
+            $awal = $akhir->copy()->startOfDay();
+            $akhir = $temp->copy()->endOfDay();
+        }
+
+        $query = Loan::with('item')
+            ->whereBetween('created_at', [$awal, $akhir])
+            ->latest('created_at');
+
+        if ($status && $status !== 'all') {
+            $query->where('status', $status);
+        }
+
+        $loans = $query->get();
+
+        $pdf = Pdf::loadView('admin.loans.pdf', [
+            'loans' => $loans,
+            'awal' => $awal,
+            'akhir' => $akhir,
+            'status' => $status,
+            'totalLoans' => $loans->count(),
+            'approvedCount' => $loans->where('status', 'approved')->count(),
+            'pendingCount' => $loans->where('status', 'pending')->count(),
+            'returnedCount' => $loans->where('status', 'returned')->count(),
+            'rejectedCount' => $loans->where('status', 'rejected')->count(),
+        ])->setPaper('a4', 'portrait');
+
+        return $pdf->download('Laporan_Peminjaman_Sarpras.pdf');
     }
 }

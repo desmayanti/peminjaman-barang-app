@@ -7,6 +7,7 @@
     @endif
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Permohonan Terkirim - PinjamBarang</title>
+    <link rel="icon" type="image/webp" href="{{ asset('images/logo-pb.webp') }}">
 
     <!-- Smart Theme Override & Anti-FOUC Engine -->
     <x-smart-theme-override />

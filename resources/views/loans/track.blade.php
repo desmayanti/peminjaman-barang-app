@@ -7,6 +7,7 @@
     @endif
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Lacak Status Peminjaman - PinjamBarang</title>
+    <link rel="icon" type="image/webp" href="{{ asset('images/logo-pb.webp') }}">
 
     <!-- Smart Theme Override & Anti-FOUC Engine -->
     <x-smart-theme-override />
@@ -36,11 +37,7 @@
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <a href="{{ route('home') }}" class="flex items-center space-x-3 group">
-                    <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-purple-600 to-indigo-500 flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                        </svg>
-                    </div>
+                    <img src="{{ asset('images/logo-pb.webp') }}" alt="Logo PB" class="h-9 w-9 rounded-xl object-cover shadow-sm group-hover:scale-105 transition-transform">
                     <span class="text-lg font-extrabold tracking-tight text-slate-900 dark:text-white">Pinjam<span class="text-purple-600 dark:text-purple-400">Barang</span></span>
                 </a>
                 
