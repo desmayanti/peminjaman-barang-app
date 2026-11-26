@@ -26,4 +26,4 @@ RUN mkdir -p database storage/framework/sessions storage/framework/views storage
 
 EXPOSE 10000
 
-CMD mkdir -p /app/database && touch /app/database/database.sqlite && chmod -R 775 /app/database /app/storage /app/bootstrap/cache && php artisan migrate --force && php artisan config:clear && php artisan serve --host=0.0.0.0 --port=10000
+CMD mkdir -p /app/storage/database && touch /app/storage/database/database.sqlite && chmod -R 775 /app/storage /app/bootstrap/cache && php artisan migrate --force && php artisan config:clear && php artisan serve --host=0.0.0.0 --port=10000
